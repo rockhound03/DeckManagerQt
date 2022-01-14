@@ -15,7 +15,7 @@ basePg.geometry('700x450+300+40')
 basePg.grid()
 catalog = ttk.Notebook(basePg)
 catalog.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
-pageWidth = 700
+pageWidth = 600
 pageHeight = 280
 
 # Setup tabs
@@ -26,6 +26,14 @@ page3 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
 catalog.add(page1, text='Set Management')
 catalog.add(page2, text='Deck Management')
 catalog.add(page3, text='Database Search')
+
+exit_button = ttk.Button(
+    basePg,
+    text='Exit',
+    command=lambda: basePg.quit()
+)
+
+exit_button.grid(column=0,row=0,columnspan=1,rowspan=1)
 #status_label.pack()
 #tk.Label(basePg,text='Classic').pack()
 #ttk.Label(basePg,text='Themed').pack()
