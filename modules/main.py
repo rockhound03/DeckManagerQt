@@ -177,7 +177,7 @@ search_entry = ttk.Entry(page3, textvariable=searchVar)
 resultBox = ttk.LabelFrame(page3,text='*** Search Results ***')
 #result_list.append('Search results can be found here')
 
-
+# add page with treeview (branch = treeview)
 exit_button.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 updateDb_button.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 status_label.grid(column=4,row=0,columnspan=2,rowspan=1,sticky=tk.W)
