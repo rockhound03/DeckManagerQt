@@ -7,6 +7,8 @@ import setmanager
 import search_tools
 from tkinter.ttk import Label
 from config import ROOT_DIR
+from PIL import Image, ImageTk
+import urllib.request
 
 #https://doc.qt.io/qtforpython/quickstart.html
 #https://www.pythontutorial.net/tkinter/

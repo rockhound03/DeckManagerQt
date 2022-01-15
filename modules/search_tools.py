@@ -13,7 +13,7 @@ def name_search(cards,search_string):
     for oneCard in cards:
         card_ = oneCard['name'].lower().find(search_string.lower())
         if card_ >= 0:
-            result.append({'name':oneCard['name'],'supertype':oneCard['supertype'],'subtypes':oneCard['subtypes'][0],'hp':oneCard['hp'],'setName':oneCard['set']['name'],'setSeries':oneCard['set']['series'],'setLegal':oneCard['set']['legalities']})
+            result.append({'name':oneCard['name'],'supertype':oneCard['supertype'],'subtypes':oneCard['subtypes'][0],'hp':oneCard['hp'],'setName':oneCard['set']['name'],'setSeries':oneCard['set']['series'],'setLegal':oneCard['set']['legalities'],'small_img':oneCard['images']['small']})
     return result
 
 def has_abilities(cards,isAbility):
