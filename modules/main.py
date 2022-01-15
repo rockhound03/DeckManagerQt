@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter import ttk
 import setmanager
 import search_tools
+from tkinter.ttk import Label
 
 #https://doc.qt.io/qtforpython/quickstart.html
 #https://www.pythontutorial.net/tkinter/
@@ -14,57 +15,156 @@ basePg.title('Deck Manager - Gen 1')
 basePg.geometry('700x450+300+40')
 basePg.grid()
 catalog = ttk.Notebook(basePg)
-catalog.pack(pady=10,expand=True)
-pageWidth = 700
+catalog.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
+pageWidth = 550
 pageHeight = 280
+
+# variable setup
+fireBool = tk.BooleanVar()
+darkBool = tk.BooleanVar()
+electricBool = tk.BooleanVar()
+grassBool = tk.BooleanVar()
+waterBool = tk.BooleanVar()
+psychicBool = tk.BooleanVar()
+fightBool = tk.BooleanVar()
+metalBool = tk.BooleanVar()
 
 # Setup tabs
 page1 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
 page2 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
 page3 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
 
-page1.pack(fill='both', expand=True)
-page2.pack(fill='both', expand=True)
-page3.pack(fill='both', expand=True)
+catalog.add(page1, text='Set Management')
+catalog.add(page2, text='Deck Management')
+catalog.add(page3, text='Database Search')
 
-status_label = ttk.Label(
-    page3,
-    text='Status: idle',
-    padding=3
-)
+#main window buttons and labels
+txt_update='Status: Idle'
+status_label = Label(basePg,text=txt_update)
 
-status_label.pack()
 
-def stat_label_callback(status):
-    new_string = 'status' + status
-    status_label.text = new_string
+def status_callback():
+    txt_update = 'Status: searching database'
+    status_label.config(text='Status: searching database')
+
+def search_callback():
+    pass
+
+
+def filter_ckbox_callback():
+    pass
 
 exit_button = ttk.Button(
-    page2,
-    text='Quit',
+    basePg,
+    text='Exit',
     command=lambda: basePg.quit()
 )
 
-checkdb_button = ttk.Button(
+updateDb_button = ttk.Button(
+    basePg,
+    text='Update DB',
+    command=status_callback
+
+)
+
+#Search page ---
+
+search_button = ttk.Button(
     page3,
-    text='Check DB',
-    command=stat_label_callback('Searching')
+    text='Search For:??',
+    command=search_callback
 )
 
-exit_button.pack(
-    ipadx=7,
-    ipady=7,
-    expand=True
-)
+# Search: setup filter check boxes
 
-checkdb_button.pack(
-    ipadx=4,
-    ipady=4,
-    expand=True
-)
-catalog.add(page1, text='Sets')
-catalog.add(page2, text='Decks')
-catalog.add(page3, text='Card Search')
-#tk.Label(basePg,text='Classic').pack()
-#ttk.Label(basePg,text='Themed').pack()
+
+filterBox = ttk.LabelFrame(page3,text='Search Filters')
+filterBox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# fire
+fire_ckbox = ttk.Checkbutton(filterBox,
+                                text='Fire',
+                                command=filter_ckbox_callback,
+                                variable=fireBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+fire_ckbox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# dark
+dark_ckbox = ttk.Checkbutton(filterBox,
+                                text='Dark',
+                                command=filter_ckbox_callback,
+                                variable=darkBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+dark_ckbox.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# fighting
+fight_ckbox = ttk.Checkbutton(filterBox,
+                                text='Fighting',
+                                command=filter_ckbox_callback,
+                                variable=fightBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+fight_ckbox.grid(column=2,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# grass
+grass_ckbox = ttk.Checkbutton(filterBox,
+                                text='Grass',
+                                command=filter_ckbox_callback,
+                                variable=grassBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+grass_ckbox.grid(column=3,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# electric
+electric_ckbox = ttk.Checkbutton(filterBox,
+                                text='Electric',
+                                command=filter_ckbox_callback,
+                                variable=electricBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+electric_ckbox.grid(column=4,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# water
+water_ckbox = ttk.Checkbutton(filterBox,
+                                text='Water',
+                                command=filter_ckbox_callback,
+                                variable=waterBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+water_ckbox.grid(column=5,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# psychic
+psychic_ckbox = ttk.Checkbutton(filterBox,
+                                text='Psychic',
+                                command=filter_ckbox_callback,
+                                variable=psychicBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+psychic_ckbox.grid(column=6,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# metal
+metal_ckbox = ttk.Checkbutton(filterBox,
+                                text='Metal',
+                                command=filter_ckbox_callback,
+                                variable=metalBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+
+# ***************************************************************
+# ---------- Search Results ------------------------------------
+search_entry = ttk.Entry(page3)
+resultBox = ttk.LabelFrame(page3,text='*** Search Results ***')
+test_label = ttk.Label(resultBox,text="Place Holder for test")
+
+exit_button.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+updateDb_button.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+status_label.grid(column=4,row=0,columnspan=2,rowspan=1,sticky=tk.W)
+# Search page buttons
+search_button.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
+search_entry.grid(column=1,row=1,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
+resultBox.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
+test_label.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 basePg.mainloop()
