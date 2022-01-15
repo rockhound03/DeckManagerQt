@@ -162,8 +162,14 @@ def search_callback():
     result_list = search_tools.name_search(cards, search_item)
     counter = 0
     for result in result_list:
-        test_label = ttk.Label(resultBox,text=result['name'])
-        test_label.grid(column=0,row=counter,columnspan=2,rowspan=1,sticky=tk.W)
+        opener = urllib.request.build_opener()
+        opener.addheaders = [('User-Agent','Mozilla/5.0')] # to avoid 403: Forbidden error
+        urllib.request.install_opener(opener)
+        urllib.request.urlretrieve(result['small_img'],'card.png')
+        img = Image.open("card.png")
+        py_img = ImageTk.PhotoImage(img)
+        test_label = ttk.Label(resultBox,text=result['name'],image=py_img)
+        test_label.grid(column=0,row=counter+2,columnspan=2,rowspan=1,sticky=tk.W)
         counter += 1
 
 
