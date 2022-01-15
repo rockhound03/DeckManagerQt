@@ -1,11 +1,12 @@
 import sys
-import random
+import os
 import json
 import tkinter as tk
 from tkinter import ttk
 import setmanager
 import search_tools
 from tkinter.ttk import Label
+from config import ROOT_DIR
 
 #https://doc.qt.io/qtforpython/quickstart.html
 #https://www.pythontutorial.net/tkinter/
@@ -28,7 +29,8 @@ waterBool = tk.BooleanVar()
 psychicBool = tk.BooleanVar()
 fightBool = tk.BooleanVar()
 metalBool = tk.BooleanVar()
-
+searchVar = tk.StringVar()
+#result_list = []
 # Setup tabs
 page1 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
 page2 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
@@ -46,10 +48,6 @@ status_label = Label(basePg,text=txt_update)
 def status_callback():
     txt_update = 'Status: searching database'
     status_label.config(text='Status: searching database')
-
-def search_callback():
-    pass
-
 
 def filter_ckbox_callback():
     pass
@@ -69,11 +67,7 @@ updateDb_button = ttk.Button(
 
 #Search page ---
 
-search_button = ttk.Button(
-    page3,
-    text='Search For:??',
-    command=search_callback
-)
+
 
 # Search: setup filter check boxes
 
@@ -155,9 +149,32 @@ metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 
 # ***************************************************************
 # ---------- Search Results ------------------------------------
-search_entry = ttk.Entry(page3)
+# searchVar
+def search_callback():
+    with open(os.path.join(ROOT_DIR,'data','cards.json'),"r") as cards_file:
+        cards_obj = json.load(cards_file)
+    cards = cards_obj['data']
+
+    search_item = search_entry.get()
+    #result_list.clear()
+    result_list = search_tools.name_search(cards, search_item)
+    counter = 0
+    for result in result_list:
+        test_label = ttk.Label(resultBox,text=result['name'])
+        test_label.grid(column=0,row=counter,columnspan=2,rowspan=1,sticky=tk.W)
+        counter += 1
+
+
+search_button = ttk.Button(
+    page3,
+    text='Search For:??',
+    command=search_callback
+)
+
+search_entry = ttk.Entry(page3, textvariable=searchVar)
 resultBox = ttk.LabelFrame(page3,text='*** Search Results ***')
-test_label = ttk.Label(resultBox,text="Place Holder for test")
+#result_list.append('Search results can be found here')
+
 
 exit_button.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 updateDb_button.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
@@ -166,5 +183,5 @@ status_label.grid(column=4,row=0,columnspan=2,rowspan=1,sticky=tk.W)
 search_button.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
 search_entry.grid(column=1,row=1,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
 resultBox.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
-test_label.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+
 basePg.mainloop()
