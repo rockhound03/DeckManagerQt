@@ -37,11 +37,12 @@ searchVar = tk.StringVar()
 page1 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
 page2 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
 page3 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
+page4 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
 
 catalog.add(page1, text='Set Management')
 catalog.add(page2, text='Deck Management')
 catalog.add(page3, text='Database Search')
-
+catalog.add(page4, text='Result List')
 #main window buttons and labels
 txt_update='Status: Idle'
 status_label = Label(basePg,text=txt_update)
