@@ -169,7 +169,10 @@ def search_callback():
         img = Image.open("card.png")
         py_img = ImageTk.PhotoImage(img)
         test_label = ttk.Label(resultBox,text=result['name'],image=py_img)
-        test_label.grid(column=0,row=counter+2,columnspan=2,rowspan=1,sticky=tk.W)
+        test_label.configure(image=py_img)
+        test_label.image = py_img
+        test_label.pack()
+        #test_label.grid(column=0,row=counter+2,columnspan=2,rowspan=1,sticky=tk.W)
         counter += 1
 
 
