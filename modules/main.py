@@ -37,11 +37,12 @@ searchVar = tk.StringVar()
 page1 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
 page2 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
 page3 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
+page4 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
 
 catalog.add(page1, text='Set Management')
 catalog.add(page2, text='Deck Management')
 catalog.add(page3, text='Database Search')
-
+catalog.add(page4, text='Result List')
 #main window buttons and labels
 txt_update='Status: Idle'
 status_label = Label(basePg,text=txt_update)
@@ -162,8 +163,17 @@ def search_callback():
     result_list = search_tools.name_search(cards, search_item)
     counter = 0
     for result in result_list:
-        test_label = ttk.Label(resultBox,text=result['name'])
-        test_label.grid(column=0,row=counter,columnspan=2,rowspan=1,sticky=tk.W)
+        opener = urllib.request.build_opener()
+        opener.addheaders = [('User-Agent','Mozilla/5.0')] # to avoid 403: Forbidden error
+        urllib.request.install_opener(opener)
+        urllib.request.urlretrieve(result['small_img'],'card.png')
+        img = Image.open("card.png")
+        py_img = ImageTk.PhotoImage(img)
+        test_label = ttk.Label(resultBox,text=result['name'],image=py_img)
+        test_label.configure(image=py_img)
+        test_label.image = py_img
+        test_label.pack()
+        #test_label.grid(column=0,row=counter+2,columnspan=2,rowspan=1,sticky=tk.W)
         counter += 1
 
 
