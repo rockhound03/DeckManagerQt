@@ -21,6 +21,7 @@ catalog = ttk.Notebook(basePg)
 catalog.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
 pageWidth = 550
 pageHeight = 280
+treeExist = False
 
 # variable setup
 fireBool = tk.BooleanVar()
@@ -170,6 +171,7 @@ def search_result_list(result_data):
         tree.insert('', tk.END, values=card_result)
 
     tree.pack()
+
 # searchVar
 def search_callback():
     with open(os.path.join(ROOT_DIR,'data','cards.json'),"r") as cards_file:
