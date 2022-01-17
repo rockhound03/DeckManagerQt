@@ -152,6 +152,24 @@ metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 
 # ***************************************************************
 # ---------- Search Results ------------------------------------
+def search_result_list(result_data):
+    column_names =('card_name', 'type', 'set_name','set_series','hp','set_legal')
+    tree = ttk.Treeview(page4, columns=column_names, show='headings')
+
+    tree.heading('card_name',text='Card Name')
+    tree.heading('type',text='Card Type')
+    tree.heading('set_name',text='Set Name')
+    tree.heading('set_series',text='Set Series')
+    tree.heading('hp',text='Health')
+    tree.heading('set_legal',text='Deck Legal')
+    card_results = []
+    for result in result_data:
+        card_results.append((result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
+
+    for card_result in card_results:
+        tree.insert('', tk.END, values=card_result)
+
+    tree.pack()
 # searchVar
 def search_callback():
     with open(os.path.join(ROOT_DIR,'data','cards.json'),"r") as cards_file:
@@ -161,6 +179,7 @@ def search_callback():
     search_item = search_entry.get()
     #result_list.clear()
     result_list = search_tools.name_search(cards, search_item)
+    search_result_list(result_list)
     counter = 0
     for result in result_list:
         opener = urllib.request.build_opener()
