@@ -37,8 +37,10 @@ class TabFrame(ttk.Notebook):
 
         self.searchVar = tk.StringVar()
 
-        self.name_search_btn = ttk.Button(page3,text='Name Search')
+        self.name_search_btn = tk.Button(page3,text='Name Search')
         self.name_search_btn['command'] = self.search_name
+        self.name_search_btn['fg'] = "#6DBFE8"
+        self.name_search_btn['bg'] = "black"
         self.name_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
         
         self.search_text = ttk.Entry(page3,textvariable=self.searchVar)
