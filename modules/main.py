@@ -15,6 +15,15 @@ class TabFrame(ttk.Notebook):
     def __init__(self,container):
         super().__init__(container)
         
+        self.fireBool = tk.BooleanVar()
+        self.darkBool = tk.BooleanVar()
+        self.electricBool = tk.BooleanVar()
+        self.grassBool = tk.BooleanVar()
+        self.waterBool = tk.BooleanVar()
+        self.psychicBool = tk.BooleanVar()
+        self.fightBool = tk.BooleanVar()
+        self.metalBool = tk.BooleanVar()
+
         self.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
         #options = {'width':550,'height'}
         page1 = ttk.Frame(self,width=550,height=280)
