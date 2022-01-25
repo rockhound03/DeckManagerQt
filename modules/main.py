@@ -134,7 +134,21 @@ class TabFrame(ttk.Notebook):
 
 
     def search_name(self):
-        pass
+        with open(os.path.join(ROOT_DIR,'data','cards.json'),"r") as cards_file:
+            cards_obj = json.load(cards_file)
+        cards = cards_obj['data']
+
+        search_item = self.search_text.get()
+        #result_list.clear()
+        result_data = search_tools.name_search(cards, search_item)
+        card_results = []
+        for result in result_data:
+            card_results.append((result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
+
+        for card_result in card_results:
+            self.result_tree.insert('', tk.END, values=card_result)
+        self.result_tree.pack()
+
 
     def filter_ckbox_callback(self):
         pass
