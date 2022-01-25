@@ -46,7 +46,97 @@ class TabFrame(ttk.Notebook):
         self.search_text = ttk.Entry(page3,textvariable=self.searchVar)
         self.search_text.grid(column=1,row=1,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
 
+        self.filterBox = ttk.LabelFrame(page3,text='Search Filters')
+        self.filterBox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        #fire
+        self.fire_ckbox = ttk.Checkbutton(self.filterBox,
+                                text='Fire',
+                                command=self.filter_ckbox_callback,
+                                variable=self.fireBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.fire_ckbox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+
+        # dark
+        self.dark_ckbox = ttk.Checkbutton(self.filterBox,
+                                text='Dark',
+                                command=self.filter_ckbox_callback,
+                                variable=self.darkBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.dark_ckbox.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# fighting
+        self.fight_ckbox = ttk.Checkbutton(self.filterBox,
+                                text='Fighting',
+                                command=self.filter_ckbox_callback,
+                                variable=self.fightBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.fight_ckbox.grid(column=2,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# grass
+        self.grass_ckbox = ttk.Checkbutton(self.filterBox,
+                                text='Grass',
+                                command=self.filter_ckbox_callback,
+                                variable=self.grassBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.grass_ckbox.grid(column=3,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# electric
+        self.electric_ckbox = ttk.Checkbutton(self.filterBox,
+                                text='Electric',
+                                command=self.filter_ckbox_callback,
+                                variable=self.electricBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.electric_ckbox.grid(column=4,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# water
+        self.water_ckbox = ttk.Checkbutton(self.filterBox,
+                                text='Water',
+                                command=self.filter_ckbox_callback,
+                                variable=self.waterBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.water_ckbox.grid(column=5,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# psychic
+        self.psychic_ckbox = ttk.Checkbutton(self.filterBox,
+                                text='Psychic',
+                                command=self.filter_ckbox_callback,
+                                variable=self.psychicBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.psychic_ckbox.grid(column=6,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# metal
+        self.metal_ckbox = ttk.Checkbutton(self.filterBox,
+                                text='Metal',
+                                command=self.filter_ckbox_callback,
+                                variable=self.metalBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        column_names =('card_name', 'type', 'set_name','set_series','hp','set_legal')
+        self.result_tree = ttk.Treeview(page4, columns=column_names, show='headings')
+        self.result_tree.heading('card_name',text='Card Name')
+        self.result_tree.heading('type',text='Card Type')
+        self.result_tree.heading('set_name',text='Set Name')
+        self.result_tree.heading('set_series',text='Set Series')
+        self.result_tree.heading('hp',text='Health')
+        self.result_tree.heading('set_legal',text='Deck Legal')
+        self.result_tree.pack()
+
+
+
     def search_name(self):
+        pass
+
+    def filter_ckbox_callback(self):
         pass
 
 class App(tk.Tk):
