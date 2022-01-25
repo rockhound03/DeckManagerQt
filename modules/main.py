@@ -26,27 +26,27 @@ class TabFrame(ttk.Notebook):
 
         self.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
         #options = {'width':550,'height'}
-        page1 = ttk.Frame(self,width=550,height=280)
-        self.add(page1,text='Set Management')
-        page2 = ttk.Frame(self,width=550,height=280)
-        self.add(page2,text='Deck Management')
-        page3 = ttk.Frame(self,width=550,height=280)
-        self.add(page3,text='Database Search')
-        page4 = ttk.Frame(self,width=550,height=280)
-        self.add(page4,text='Result List')
+        self.page1 = ttk.Frame(self,width=550,height=280)
+        self.add(self.page1,text='Set Management')
+        self.page2 = ttk.Frame(self,width=550,height=280)
+        self.add(self.page2,text='Deck Management')
+        self.page3 = ttk.Frame(self,width=550,height=280)
+        self.add(self.page3,text='Database Search')
+        self.page4 = ttk.Frame(self,width=550,height=280)
+        self.add(self.page4,text='Result List')
 
         self.searchVar = tk.StringVar()
 
-        self.name_search_btn = tk.Button(page3,text='Name Search')
+        self.name_search_btn = tk.Button(self.page3,text='Name Search')
         self.name_search_btn['command'] = self.search_name
         self.name_search_btn['fg'] = "#6DBFE8"
         self.name_search_btn['bg'] = "black"
         self.name_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
         
-        self.search_text = ttk.Entry(page3,textvariable=self.searchVar)
+        self.search_text = ttk.Entry(self.page3,textvariable=self.searchVar)
         self.search_text.grid(column=1,row=1,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
 
-        self.filterBox = ttk.LabelFrame(page3,text='Search Filters')
+        self.filterBox = ttk.LabelFrame(self.page3,text='Search Filters')
         self.filterBox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         #fire
         self.fire_ckbox = ttk.Checkbutton(self.filterBox,
@@ -122,7 +122,7 @@ class TabFrame(ttk.Notebook):
                                 )
         self.metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         column_names =('card_name', 'type', 'set_name','set_series','hp','set_legal')
-        self.result_tree = ttk.Treeview(page4, columns=column_names, show='headings')
+        self.result_tree = ttk.Treeview(self.page4, columns=column_names, show='headings')
         self.result_tree.heading('card_name',text='Card Name')
         self.result_tree.heading('type',text='Card Type')
         self.result_tree.heading('set_name',text='Set Name')
