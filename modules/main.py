@@ -128,16 +128,7 @@ class TabFrame(ttk.Notebook):
                                 offvalue=False
                                 )
         self.metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-        column_names =('card_name', 'type', 'set_name','set_series','hp','set_legal')
-        self.result_tree = ttk.Treeview(self.page4, columns=column_names, show='headings')
-        self.result_tree.heading('card_name',text='Card Name')
-        self.result_tree.heading('type',text='Card Type')
-        self.result_tree.heading('set_name',text='Set Name')
-        self.result_tree.heading('set_series',text='Set Series')
-        self.result_tree.heading('hp',text='Health')
-        self.result_tree.heading('set_legal',text='Deck Legal')
-        self.result_tree.pack()
-
+        self.setup_tree()
 
 
     def search_name(self):
@@ -162,13 +153,21 @@ class TabFrame(ttk.Notebook):
         pass
 
     def clear_tree(self):
-        counter = 0
         for obwidget in self.page4.winfo_children():
-            counter += 1
-        print(str(counter))
+            obwidget.destroy()
+        print(str(obwidget) + ' destroyed')
+        self.setup_tree()
 
     def setup_tree(self):
-        pass
+        column_names =('card_name', 'type', 'set_name','set_series','hp','set_legal')
+        self.result_tree = ttk.Treeview(self.page4, columns=column_names, show='headings')
+        self.result_tree.heading('card_name',text='Card Name')
+        self.result_tree.heading('type',text='Card Type')
+        self.result_tree.heading('set_name',text='Set Name')
+        self.result_tree.heading('set_series',text='Set Series')
+        self.result_tree.heading('hp',text='Health')
+        self.result_tree.heading('set_legal',text='Deck Legal')
+        self.result_tree.pack()
 
 class App(tk.Tk):
     def __init__(self):
