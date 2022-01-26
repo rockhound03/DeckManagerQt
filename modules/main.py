@@ -10,211 +10,185 @@ from config import ROOT_DIR
 from PIL import Image, ImageTk
 import urllib.request
 
-#https://doc.qt.io/qtforpython/quickstart.html
-#https://www.pythontutorial.net/tkinter/
 
-basePg = tk.Tk()
-basePg.title('Deck Manager - Gen 1')
-basePg.geometry('700x450+300+40')
-basePg.grid()
-catalog = ttk.Notebook(basePg)
-catalog.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
-pageWidth = 550
-pageHeight = 280
-treeExist = False
+class TabFrame(ttk.Notebook):
+    def __init__(self,container):
+        super().__init__(container)
+        
+        self.fireBool = tk.BooleanVar()
+        self.darkBool = tk.BooleanVar()
+        self.electricBool = tk.BooleanVar()
+        self.grassBool = tk.BooleanVar()
+        self.waterBool = tk.BooleanVar()
+        self.psychicBool = tk.BooleanVar()
+        self.fightBool = tk.BooleanVar()
+        self.metalBool = tk.BooleanVar()
 
-# variable setup
-fireBool = tk.BooleanVar()
-darkBool = tk.BooleanVar()
-electricBool = tk.BooleanVar()
-grassBool = tk.BooleanVar()
-waterBool = tk.BooleanVar()
-psychicBool = tk.BooleanVar()
-fightBool = tk.BooleanVar()
-metalBool = tk.BooleanVar()
-searchVar = tk.StringVar()
-#result_list = []
-# Setup tabs
-page1 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
-page2 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
-page3 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
-page4 = ttk.Frame(catalog, width=pageWidth, height=pageHeight)
+        self.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
+        #options = {'width':550,'height'}
+        self.page1 = ttk.Frame(self,width=650,height=280)
+        self.add(self.page1,text='Set Management')
+        self.page2 = ttk.Frame(self,width=650,height=280)
+        self.add(self.page2,text='Deck Management')
+        self.page3 = ttk.Frame(self,width=650,height=280)
+        self.add(self.page3,text='Database Search')
+        self.page4 = ttk.Frame(self,width=650,height=280)
+        self.add(self.page4,text='Result List')
 
-catalog.add(page1, text='Set Management')
-catalog.add(page2, text='Deck Management')
-catalog.add(page3, text='Database Search')
-catalog.add(page4, text='Result List')
-#main window buttons and labels
-txt_update='Status: Idle'
-status_label = Label(basePg,text=txt_update)
+        self.searchVar = tk.StringVar()
 
+        self.name_search_btn = tk.Button(self.page3,text='Name Search')
+        self.name_search_btn['command'] = self.search_name
+        self.name_search_btn['fg'] = "#6DBFE8"
+        self.name_search_btn['bg'] = "black"
+        self.name_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
 
-def status_callback():
-    txt_update = 'Status: searching database'
-    status_label.config(text='Status: searching database')
+        
+        self.search_text = ttk.Entry(self.page3,textvariable=self.searchVar)
+        self.search_text.grid(column=1,row=1,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
 
-def filter_ckbox_callback():
-    pass
+        self.clear_report_btn = tk.Button(self.page3,text='Clear Search')
+        self.clear_report_btn['command'] = self.clear_tree
+        self.clear_report_btn['fg'] = "#6DBFE8"
+        self.clear_report_btn['bg'] = "black"
+        self.clear_report_btn.grid(column=2,row=1,columnspan=1,rowspan=1,sticky=tk.W)
 
-exit_button = ttk.Button(
-    basePg,
-    text='Exit',
-    command=lambda: basePg.quit()
-)
-
-updateDb_button = ttk.Button(
-    basePg,
-    text='Update DB',
-    command=status_callback
-
-)
-
-#Search page ---
-
-
-
-# Search: setup filter check boxes
-
-
-filterBox = ttk.LabelFrame(page3,text='Search Filters')
-filterBox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-# fire
-fire_ckbox = ttk.Checkbutton(filterBox,
+        self.filterBox = ttk.LabelFrame(self.page3,text='Search Filters')
+        self.filterBox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        #fire
+        self.fire_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Fire',
-                                command=filter_ckbox_callback,
-                                variable=fireBool,
+                                command=self.filter_ckbox_callback,
+                                variable=self.fireBool,
                                 onvalue=True,
                                 offvalue=False
                                 )
-fire_ckbox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-# dark
-dark_ckbox = ttk.Checkbutton(filterBox,
+        self.fire_ckbox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+
+        # dark
+        self.dark_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Dark',
-                                command=filter_ckbox_callback,
-                                variable=darkBool,
+                                command=self.filter_ckbox_callback,
+                                variable=self.darkBool,
                                 onvalue=True,
                                 offvalue=False
                                 )
-dark_ckbox.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.dark_ckbox.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 # fighting
-fight_ckbox = ttk.Checkbutton(filterBox,
+        self.fight_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Fighting',
-                                command=filter_ckbox_callback,
-                                variable=fightBool,
+                                command=self.filter_ckbox_callback,
+                                variable=self.fightBool,
                                 onvalue=True,
                                 offvalue=False
                                 )
-fight_ckbox.grid(column=2,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.fight_ckbox.grid(column=2,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 # grass
-grass_ckbox = ttk.Checkbutton(filterBox,
+        self.grass_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Grass',
-                                command=filter_ckbox_callback,
-                                variable=grassBool,
+                                command=self.filter_ckbox_callback,
+                                variable=self.grassBool,
                                 onvalue=True,
                                 offvalue=False
                                 )
-grass_ckbox.grid(column=3,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.grass_ckbox.grid(column=3,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 # electric
-electric_ckbox = ttk.Checkbutton(filterBox,
+        self.electric_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Electric',
-                                command=filter_ckbox_callback,
-                                variable=electricBool,
+                                command=self.filter_ckbox_callback,
+                                variable=self.electricBool,
                                 onvalue=True,
                                 offvalue=False
                                 )
-electric_ckbox.grid(column=4,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.electric_ckbox.grid(column=4,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 # water
-water_ckbox = ttk.Checkbutton(filterBox,
+        self.water_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Water',
-                                command=filter_ckbox_callback,
-                                variable=waterBool,
+                                command=self.filter_ckbox_callback,
+                                variable=self.waterBool,
                                 onvalue=True,
                                 offvalue=False
                                 )
-water_ckbox.grid(column=5,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.water_ckbox.grid(column=5,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 # psychic
-psychic_ckbox = ttk.Checkbutton(filterBox,
+        self.psychic_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Psychic',
-                                command=filter_ckbox_callback,
-                                variable=psychicBool,
+                                command=self.filter_ckbox_callback,
+                                variable=self.psychicBool,
                                 onvalue=True,
                                 offvalue=False
                                 )
-psychic_ckbox.grid(column=6,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.psychic_ckbox.grid(column=6,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 # metal
-metal_ckbox = ttk.Checkbutton(filterBox,
+        self.metal_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Metal',
-                                command=filter_ckbox_callback,
-                                variable=metalBool,
+                                command=self.filter_ckbox_callback,
+                                variable=self.metalBool,
                                 onvalue=True,
                                 offvalue=False
                                 )
-metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-
-# ***************************************************************
-# ---------- Search Results ------------------------------------
-def search_result_list(result_data):
-    column_names =('card_name', 'type', 'set_name','set_series','hp','set_legal')
-    tree = ttk.Treeview(page4, columns=column_names, show='headings')
-
-    tree.heading('card_name',text='Card Name')
-    tree.heading('type',text='Card Type')
-    tree.heading('set_name',text='Set Name')
-    tree.heading('set_series',text='Set Series')
-    tree.heading('hp',text='Health')
-    tree.heading('set_legal',text='Deck Legal')
-    card_results = []
-    for result in result_data:
-        card_results.append((result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
-
-    for card_result in card_results:
-        tree.insert('', tk.END, values=card_result)
-
-    tree.pack()
-
-# searchVar
-def search_callback():
-    with open(os.path.join(ROOT_DIR,'data','cards.json'),"r") as cards_file:
-        cards_obj = json.load(cards_file)
-    cards = cards_obj['data']
-
-    search_item = search_entry.get()
-    #result_list.clear()
-    result_list = search_tools.name_search(cards, search_item)
-    search_result_list(result_list)
-    counter = 0
-    for result in result_list:
-        opener = urllib.request.build_opener()
-        opener.addheaders = [('User-Agent','Mozilla/5.0')] # to avoid 403: Forbidden error
-        urllib.request.install_opener(opener)
-        urllib.request.urlretrieve(result['small_img'],'card.png')
-        img = Image.open("card.png")
-        py_img = ImageTk.PhotoImage(img)
-        test_label = ttk.Label(resultBox,text=result['name'],image=py_img)
-        test_label.configure(image=py_img)
-        test_label.image = py_img
-        test_label.pack()
-        #test_label.grid(column=0,row=counter+2,columnspan=2,rowspan=1,sticky=tk.W)
-        counter += 1
+        self.metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.setup_tree()
 
 
-search_button = ttk.Button(
-    page3,
-    text='Search For:??',
-    command=search_callback
-)
+    def search_name(self):
+        with open(os.path.join(ROOT_DIR,'data','cards.json'),"r") as cards_file:
+            cards_obj = json.load(cards_file)
+        cards = cards_obj['data']
 
-search_entry = ttk.Entry(page3, textvariable=searchVar)
-resultBox = ttk.LabelFrame(page3,text='*** Search Results ***')
-#result_list.append('Search results can be found here')
+        search_item = self.search_text.get()
+        #result_list.clear()
+        result_data = search_tools.name_search(cards, search_item)
+        card_results = []
+        for result in result_data:
+            card_results.append((result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
 
-# add page with treeview (branch = treeview)
-exit_button.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-updateDb_button.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-status_label.grid(column=4,row=0,columnspan=2,rowspan=1,sticky=tk.W)
-# Search page buttons
-search_button.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
-search_entry.grid(column=1,row=1,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
-resultBox.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
+        for card_result in card_results:
+            self.result_tree.insert('', tk.END, values=card_result)
+        self.result_tree.pack()
+        print(str(self.result_tree.winfo_children()))
 
-basePg.mainloop()
+
+    def filter_ckbox_callback(self):
+        pass
+
+    def clear_tree(self):
+        for obwidget in self.page4.winfo_children():
+            obwidget.destroy()
+        print(str(obwidget) + ' destroyed')
+        self.setup_tree()
+
+    def setup_tree(self):
+        column_names =('card_name', 'type', 'set_name','set_series','hp','set_legal')
+        self.result_tree = ttk.Treeview(self.page4, columns=column_names, show='headings')
+        self.result_tree.heading('card_name',text='Card Name')
+        self.result_tree.heading('type',text='Card Type')
+        self.result_tree.heading('set_name',text='Set Name')
+        self.result_tree.heading('set_series',text='Set Series')
+        self.result_tree.heading('hp',text='Health')
+        self.result_tree.heading('set_legal',text='Deck Legal')
+        self.result_tree.column('card_name',width=100,anchor=tk.W)
+        self.result_tree.column('type',width=80,anchor=tk.W)
+        self.result_tree.column('set_name',width=120,anchor=tk.W)
+        self.result_tree.column('set_series',width=110,anchor=tk.W)
+        self.result_tree.column('hp',width=100,anchor=tk.W)
+        self.result_tree.column('set_legal',width=170,anchor=tk.W)
+        self.result_tree.pack()
+
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
+
+        self.title('Deck Manager - Gen 2')
+        self.geometry('800x450+250+40')
+        self.resizable(True, True)
+        # quit button
+        self.quit_button = ttk.Button(self,text='Quit')
+        self.quit_button['command'] = lambda: self.quit()
+        self.quit_button.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+
+
+if __name__ == "__main__":
+    app = App()
+    TabFrame(app)
+    app.mainloop()
