@@ -42,9 +42,16 @@ class TabFrame(ttk.Notebook):
         self.name_search_btn['fg'] = "#6DBFE8"
         self.name_search_btn['bg'] = "black"
         self.name_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
+
         
         self.search_text = ttk.Entry(self.page3,textvariable=self.searchVar)
         self.search_text.grid(column=1,row=1,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
+
+        self.clear_report_btn = tk.Button(self.page3,text='Clear Search')
+        self.clear_report_btn['command'] = self.clear_tree
+        self.clear_report_btn['fg'] = "#6DBFE8"
+        self.clear_report_btn['bg'] = "black"
+        self.clear_report_btn.grid(column=2,row=1,columnspan=1,rowspan=1,sticky=tk.W)
 
         self.filterBox = ttk.LabelFrame(self.page3,text='Search Filters')
         self.filterBox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
@@ -148,9 +155,19 @@ class TabFrame(ttk.Notebook):
         for card_result in card_results:
             self.result_tree.insert('', tk.END, values=card_result)
         self.result_tree.pack()
+        print(str(self.result_tree.winfo_children()))
 
 
     def filter_ckbox_callback(self):
+        pass
+
+    def clear_tree(self):
+        counter = 0
+        for obwidget in self.page4.winfo_children():
+            counter += 1
+        print(str(counter))
+
+    def setup_tree(self):
         pass
 
 class App(tk.Tk):
