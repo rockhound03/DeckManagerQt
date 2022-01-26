@@ -26,13 +26,13 @@ class TabFrame(ttk.Notebook):
 
         self.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
         #options = {'width':550,'height'}
-        self.page1 = ttk.Frame(self,width=550,height=280)
+        self.page1 = ttk.Frame(self,width=650,height=280)
         self.add(self.page1,text='Set Management')
-        self.page2 = ttk.Frame(self,width=550,height=280)
+        self.page2 = ttk.Frame(self,width=650,height=280)
         self.add(self.page2,text='Deck Management')
-        self.page3 = ttk.Frame(self,width=550,height=280)
+        self.page3 = ttk.Frame(self,width=650,height=280)
         self.add(self.page3,text='Database Search')
-        self.page4 = ttk.Frame(self,width=550,height=280)
+        self.page4 = ttk.Frame(self,width=650,height=280)
         self.add(self.page4,text='Result List')
 
         self.searchVar = tk.StringVar()
@@ -167,6 +167,12 @@ class TabFrame(ttk.Notebook):
         self.result_tree.heading('set_series',text='Set Series')
         self.result_tree.heading('hp',text='Health')
         self.result_tree.heading('set_legal',text='Deck Legal')
+        self.result_tree.column('card_name',width=100,anchor=tk.W)
+        self.result_tree.column('type',width=80,anchor=tk.W)
+        self.result_tree.column('set_name',width=120,anchor=tk.W)
+        self.result_tree.column('set_series',width=110,anchor=tk.W)
+        self.result_tree.column('hp',width=100,anchor=tk.W)
+        self.result_tree.column('set_legal',width=170,anchor=tk.W)
         self.result_tree.pack()
 
 class App(tk.Tk):
@@ -174,8 +180,8 @@ class App(tk.Tk):
         super().__init__()
 
         self.title('Deck Manager - Gen 2')
-        self.geometry('700x450+300+40')
-        self.resizable(False, False)
+        self.geometry('800x450+250+40')
+        self.resizable(True, True)
         # quit button
         self.quit_button = ttk.Button(self,text='Quit')
         self.quit_button['command'] = lambda: self.quit()
