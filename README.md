@@ -19,5 +19,6 @@ pip install tk
 
 ## Data Sources
 
+[Pokemon TCG API Developer Portal](https://dev.pokemontcg.io/dashboard)
 ___
 
