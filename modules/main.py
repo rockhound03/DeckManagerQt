@@ -36,6 +36,7 @@ class TabFrame(ttk.Notebook):
         self.add(self.page4,text='Result List')
 
         self.searchVar = tk.StringVar()
+        self.abilityVar = tk.StringVar()
 
         self.name_search_btn = tk.Button(self.page3,text='Name Search')
         self.name_search_btn['command'] = self.search_name
@@ -43,9 +44,18 @@ class TabFrame(ttk.Notebook):
         self.name_search_btn['bg'] = "black"
         self.name_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
 
+        self.ability_search_btn = tk.Button(self.page3,text='Ability Search')
+        self.ability_search_btn['command'] = self.search_name
+        self.ability_search_btn['fg'] = "#6DBFE8"
+        self.ability_search_btn['bg'] = "black"
+        self.ability_search_btn.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
+
         
         self.search_text = ttk.Entry(self.page3,textvariable=self.searchVar)
         self.search_text.grid(column=1,row=1,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
+
+        self.ability_search_text = ttk.Entry(self.page3,textvariable=self.abilityVar)
+        self.ability_search_text.grid(column=1,row=2,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
 
         self.clear_report_btn = tk.Button(self.page3,text='Clear Search')
         self.clear_report_btn['command'] = self.clear_tree
@@ -148,6 +158,20 @@ class TabFrame(ttk.Notebook):
         self.result_tree.pack()
         print(str(self.result_tree.winfo_children()))
 
+    def search_ability_name(self):
+        with open(os.path.join(ROOT_DIR,'data','cards.json'),"r") as cards_file:
+            cards_obj = json.load(cards_file)
+        cards = cards_obj['data']
+        search_item = self.ability_search_text.get()
+        result_data = search_tools.search_ability_names(cards, search_item)
+        card_results = []
+        for result in result_data:
+            card_results.append((result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
+
+        for card_result in card_results:
+            self.result_tree.insert('', tk.END, values=card_result)
+        self.result_tree.pack()
+        print(str(self.result_tree.winfo_children()))
 
     def filter_ckbox_callback(self):
         pass

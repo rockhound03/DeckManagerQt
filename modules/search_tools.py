@@ -29,3 +29,14 @@ def search_attack(cards,search_term):
         if 'attacks' in oneCard:
             result.append({'name':oneCard['name'],'supertype':oneCard['supertype'],'subtypes':oneCard['subtypes'][0],'setName':oneCard['set']['name'],'attack':oneCard['attacks']['name'],'attack_cost':oneCard['attacks']['cost'],'attack_conv_cost':oneCard['attacks']['convertedEnergyCost'],'attack_damage':oneCard['attacks']['damage'],'attack_text':oneCard['attacks']['cost']})
     return result
+
+def search_ability_names(cards,search_term):
+    result = []
+    for oneCard in cards:
+        if 'abilities' in oneCard:
+            card_ = oneCard['abilities']['name'].lower().find(search_term.lower())
+            if card_ >= 0:
+                result.append({'name':oneCard['name'],'supertype':oneCard['supertype'],'subtypes':oneCard['subtypes'][0],'setName':oneCard['set']['name'],'ability':oneCard['abilities']['name'],'ability_text':oneCard['abilities']['text'],'ability_type':oneCard['abilities']['type']})
+    return result
+
+
