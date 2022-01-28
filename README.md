@@ -13,9 +13,9 @@ Includes data files for Pokemon, but other games / card sets can be added.
 ## tKinter
 To install tKinter, enter the following command in the console -
 
-'''
+```
 pip install tk
-'''
+```
 
 ## Data Sources
 
