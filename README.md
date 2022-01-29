@@ -9,15 +9,18 @@ Python tool to organize card sets and create / manage decks. Default uses cards 
 Includes data files for Pokemon, but other games / card sets can be added.
 
 ---
-## Python
+## Packages Used
+
+---
+### Python
 This project is being developed using Python 3.8.
 
 ---
-## Anaconda
+### Anaconda
 The open source data science package from [Anaconda](https://www.anaconda.com/) was used to install Python and associated libraries.
 
 ---
-## tKinter
+### tKinter
 To install tKinter, enter the following command in the console -
 
 ```
