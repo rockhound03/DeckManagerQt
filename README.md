@@ -26,6 +26,12 @@ To install tKinter, enter the following command in the console -
 ```
 pip install tk
 ```
+---
+
+### Pillow (PIL Fork)
+Installation instructions for multiple OS can be found [here](https://pillow.readthedocs.io/en/stable/installation.html)
+
+---
 
 ## Data Sources
 
