@@ -198,6 +198,9 @@ class TabFrame(ttk.Notebook):
         self.result_tree.column('hp',width=100,anchor=tk.W)
         self.result_tree.column('set_legal',width=170,anchor=tk.W)
         self.result_tree.pack()
+        #self.treeScroll = ttk.Scrollbar(self.result_tree,orient='vertical',command=self.result_tree.yview)
+        #self.treeScroll.pack()
+        #self.treeScroll.grid(row=0,column=1,sticky='ns')
 
 class App(tk.Tk):
     def __init__(self):
