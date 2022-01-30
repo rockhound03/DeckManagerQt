@@ -24,6 +24,11 @@ class TabFrame(ttk.Notebook):
         self.psychicBool = tk.BooleanVar()
         self.fightBool = tk.BooleanVar()
         self.metalBool = tk.BooleanVar()
+        self.fairyBool = tk.BooleanVar()
+        self.dragonBool = tk.BooleanVar()
+
+        self.expandBool = tk.BooleanVar()
+        self.unlimitBool = tk.BooleanVar()
 
         self.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
         #options = {'width':550,'height'}
@@ -43,13 +48,13 @@ class TabFrame(ttk.Notebook):
         self.name_search_btn['command'] = self.search_name
         self.name_search_btn['fg'] = "#6DBFE8"
         self.name_search_btn['bg'] = "black"
-        self.name_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
+        self.name_search_btn.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
 
         self.ability_search_btn = tk.Button(self.page3,text='Ability Search')
         self.ability_search_btn['command'] = self.search_name
         self.ability_search_btn['fg'] = "#6DBFE8"
         self.ability_search_btn['bg'] = "black"
-        self.ability_search_btn.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
+        self.ability_search_btn.grid(column=0,row=3,columnspan=1,rowspan=1,sticky=tk.W)
 
         
         self.search_text = ttk.Entry(self.page3,textvariable=self.searchVar)
@@ -139,6 +144,46 @@ class TabFrame(ttk.Notebook):
                                 offvalue=False
                                 )
         self.metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# fairy
+        self.fairy_ckbox = ttk.Checkbutton(self.filterBox,
+                                text='Fairy',
+                                command=self.filter_ckbox_callback,
+                                variable=self.fairyBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.fairy_ckbox.grid(column=8,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# dragon
+        self.dragon_ckbox = ttk.Checkbutton(self.filterBox,
+                                text='Dragon',
+                                command=self.filter_ckbox_callback,
+                                variable=self.dragonBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.dragon_ckbox.grid(column=9,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+
+        self.legalBox = ttk.LabelFrame(self.page3,text='Search Filters: Legal')
+        self.legalBox.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
+
+        self.expand_ckbox = ttk.Checkbutton(self.legalBox,
+                                text='Expanded',
+                                command=self.filter_ckbox_callback,
+                                variable=self.expandBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.expand_ckbox.grid(column=9,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+
+        self.unlimit_ckbox = ttk.Checkbutton(self.legalBox,
+                                text='Unlimited',
+                                command=self.filter_ckbox_callback,
+                                variable=self.unlimitBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.unlimit_ckbox.grid(column=9,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+
         self.setup_tree()
 
 
