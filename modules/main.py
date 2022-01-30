@@ -2,6 +2,7 @@ import sys
 import os
 import json
 import tkinter as tk
+from tkinter import *
 from tkinter import ttk
 import setmanager
 import search_tools
@@ -197,9 +198,10 @@ class TabFrame(ttk.Notebook):
         self.result_tree.column('set_series',width=110,anchor=tk.W)
         self.result_tree.column('hp',width=100,anchor=tk.W)
         self.result_tree.column('set_legal',width=170,anchor=tk.W)
-        self.result_tree.pack()
-        #self.treeScroll = ttk.Scrollbar(self.result_tree,orient='vertical',command=self.result_tree.yview)
-        #self.treeScroll.pack()
+        #self.result_tree.grid(row=0,column=0,sticky='ns')
+        self.result_tree.pack(side=LEFT)
+        self.treeScroll = ttk.Scrollbar(self.page4,orient='vertical',command=self.result_tree.yview)
+        self.treeScroll.pack(side=RIGHT, fill=Y)
         #self.treeScroll.grid(row=0,column=1,sticky='ns')
 
 class App(tk.Tk):
