@@ -6,6 +6,7 @@ from tkinter import *
 from tkinter import ttk
 import setmanager
 import search_tools
+import gui_init
 from tkinter.ttk import Label
 from config import ROOT_DIR
 from PIL import Image, ImageTk
@@ -29,6 +30,14 @@ class TabFrame(ttk.Notebook):
 
         self.expandBool = tk.BooleanVar()
         self.unlimitBool = tk.BooleanVar()
+        self.standardBool = tk.BooleanVar()
+
+        self.hpEqual = tk.StringVar()
+        self.filterTerms = gui_init.filter_bool_init()
+        self.cardSetNames = gui_init.load_set_names()
+        self.searchSetName = tk.StringVar()
+        self.searchVar = tk.StringVar()
+        self.abilityVar = tk.StringVar()
 
         self.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
         #options = {'width':550,'height'}
@@ -41,35 +50,10 @@ class TabFrame(ttk.Notebook):
         self.page4 = ttk.Frame(self,width=650,height=280)
         self.add(self.page4,text='Result List')
 
-        self.searchVar = tk.StringVar()
-        self.abilityVar = tk.StringVar()
-
-        self.name_search_btn = tk.Button(self.page3,text='Name Search')
-        self.name_search_btn['command'] = self.search_name
-        self.name_search_btn['fg'] = "#6DBFE8"
-        self.name_search_btn['bg'] = "black"
-        self.name_search_btn.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
-
-        self.ability_search_btn = tk.Button(self.page3,text='Ability Search')
-        self.ability_search_btn['command'] = self.search_name
-        self.ability_search_btn['fg'] = "#6DBFE8"
-        self.ability_search_btn['bg'] = "black"
-        self.ability_search_btn.grid(column=0,row=3,columnspan=1,rowspan=1,sticky=tk.W)
-
         
-        self.search_text = ttk.Entry(self.page3,textvariable=self.searchVar)
-        self.search_text.grid(column=1,row=1,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
 
-        self.ability_search_text = ttk.Entry(self.page3,textvariable=self.abilityVar)
-        self.ability_search_text.grid(column=1,row=2,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
-
-        self.clear_report_btn = tk.Button(self.page3,text='Clear Search')
-        self.clear_report_btn['command'] = self.clear_tree
-        self.clear_report_btn['fg'] = "#6DBFE8"
-        self.clear_report_btn['bg'] = "black"
-        self.clear_report_btn.grid(column=2,row=1,columnspan=1,rowspan=1,sticky=tk.W)
-
-        self.filterBox = ttk.LabelFrame(self.page3,text='Search Filters')
+        # Filter box setups: 
+        self.filterBox = ttk.LabelFrame(self.page3,text='Search Filters: Energy Type')
         self.filterBox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         #fire
         self.fire_ckbox = ttk.Checkbutton(self.filterBox,
@@ -90,7 +74,7 @@ class TabFrame(ttk.Notebook):
                                 offvalue=False
                                 )
         self.dark_ckbox.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-# fighting
+        # fighting
         self.fight_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Fighting',
                                 command=self.filter_ckbox_callback,
@@ -99,7 +83,7 @@ class TabFrame(ttk.Notebook):
                                 offvalue=False
                                 )
         self.fight_ckbox.grid(column=2,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-# grass
+        # grass
         self.grass_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Grass',
                                 command=self.filter_ckbox_callback,
@@ -108,7 +92,7 @@ class TabFrame(ttk.Notebook):
                                 offvalue=False
                                 )
         self.grass_ckbox.grid(column=3,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-# electric
+        # electric
         self.electric_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Electric',
                                 command=self.filter_ckbox_callback,
@@ -117,7 +101,7 @@ class TabFrame(ttk.Notebook):
                                 offvalue=False
                                 )
         self.electric_ckbox.grid(column=4,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-# water
+        # water
         self.water_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Water',
                                 command=self.filter_ckbox_callback,
@@ -126,7 +110,7 @@ class TabFrame(ttk.Notebook):
                                 offvalue=False
                                 )
         self.water_ckbox.grid(column=5,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-# psychic
+        # psychic
         self.psychic_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Psychic',
                                 command=self.filter_ckbox_callback,
@@ -135,7 +119,7 @@ class TabFrame(ttk.Notebook):
                                 offvalue=False
                                 )
         self.psychic_ckbox.grid(column=6,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-# metal
+        # metal
         self.metal_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Metal',
                                 command=self.filter_ckbox_callback,
@@ -144,7 +128,7 @@ class TabFrame(ttk.Notebook):
                                 offvalue=False
                                 )
         self.metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-# fairy
+        # fairy
         self.fairy_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Fairy',
                                 command=self.filter_ckbox_callback,
@@ -153,7 +137,7 @@ class TabFrame(ttk.Notebook):
                                 offvalue=False
                                 )
         self.fairy_ckbox.grid(column=8,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-# dragon
+        # dragon
         self.dragon_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Dragon',
                                 command=self.filter_ckbox_callback,
@@ -163,9 +147,9 @@ class TabFrame(ttk.Notebook):
                                 )
         self.dragon_ckbox.grid(column=9,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 
-        self.legalBox = ttk.LabelFrame(self.page3,text='Search Filters: Legal')
+        self.legalBox = ttk.LabelFrame(self.page3,text='Search Filters: Tournament Legal')
         self.legalBox.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
-
+        # expanded
         self.expand_ckbox = ttk.Checkbutton(self.legalBox,
                                 text='Expanded',
                                 command=self.filter_ckbox_callback,
@@ -173,8 +157,8 @@ class TabFrame(ttk.Notebook):
                                 onvalue=True,
                                 offvalue=False
                                 )
-        self.expand_ckbox.grid(column=9,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-
+        self.expand_ckbox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        # unlimited
         self.unlimit_ckbox = ttk.Checkbutton(self.legalBox,
                                 text='Unlimited',
                                 command=self.filter_ckbox_callback,
@@ -182,18 +166,67 @@ class TabFrame(ttk.Notebook):
                                 onvalue=True,
                                 offvalue=False
                                 )
-        self.unlimit_ckbox.grid(column=9,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.unlimit_ckbox.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
+        # standard
+        self.standard_ckbox = ttk.Checkbutton(self.legalBox,
+                                text='Standard',
+                                command=self.filter_ckbox_callback,
+                                variable=self.standardBool,
+                                onvalue=True,
+                                offvalue=False
+                                )
+        self.standard_ckbox.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
+
+        self.HPfilterbox = ttk.LabelFrame(self.page3,text='Search Filters: HP Points')
+        self.HPfilterbox.grid(column=2,row=1,columnspan=1,rowspan=1,sticky=tk.E)
+        self.hpradio1 = ttk.Radiobutton(self.HPfilterbox, text='Greater than', value='GT',variable=self.hpEqual)
+        self.hpradio1.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.hpradio2 = ttk.Radiobutton(self.HPfilterbox, text='Less than', value='LT',variable=self.hpEqual)
+        self.hpradio2.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
+        self.hpradio3 = ttk.Radiobutton(self.HPfilterbox, text='Equal to', value='EQ',variable=self.hpEqual)
+        self.hpradio3.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
+
+        self.setListDropdown = ttk.OptionMenu(
+            self.page3,
+            self.searchSetName,
+            self.cardSetNames[0],
+            *self.cardSetNames,
+            command=self.select_setname
+        )
+        self.setListDropdown.grid(column=1,row=1,columnspan=1,rowspan=1,sticky=tk.E)
+
+        self.nameSearchBox = ttk.LabelFrame(self.page3,text='Search: Card Name')
+        self.nameSearchBox.grid(column=0,row=3,columnspan=1,rowspan=1,sticky=tk.W)
+        self.search_text = ttk.Entry(self.nameSearchBox,textvariable=self.searchVar)
+        self.search_text.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W,padx=2, pady=2)
+        self.name_search_btn = tk.Button(self.nameSearchBox,text='Name Search')
+        self.name_search_btn['command'] = self.search_name
+        self.name_search_btn['fg'] = "#6DBFE8"
+        self.name_search_btn['bg'] = "black"
+        self.name_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
+        self.clear_report_btn = tk.Button(self.nameSearchBox,text='Clear Search')
+        self.clear_report_btn['command'] = self.clear_tree
+        self.clear_report_btn['fg'] = "#6DBFE8"
+        self.clear_report_btn['bg'] = "black"
+        self.clear_report_btn.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
+
+        self.abilitySearchBox = ttk.LabelFrame(self.page3,text='Search: Ability name')
+        self.abilitySearchBox.grid(column=0,row=4,columnspan=1,rowspan=1,sticky=tk.W)
+        self.ability_search_text = ttk.Entry(self.abilitySearchBox,textvariable=self.abilityVar)
+        self.ability_search_text.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
+        self.ability_search_btn = tk.Button(self.abilitySearchBox,text='Ability Search')
+        self.ability_search_btn['command'] = self.search_name
+        self.ability_search_btn['fg'] = "#6DBFE8"
+        self.ability_search_btn['bg'] = "black"
+        self.ability_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
 
         self.setup_tree()
 
 
     def search_name(self):
-        with open(os.path.join(ROOT_DIR,'data','cards.json'),"r") as cards_file:
-            cards_obj = json.load(cards_file)
-        cards = cards_obj['data']
-
+        cards = search_tools.load_card_data()
         search_item = self.search_text.get()
-        #result_list.clear()
+        
         result_data = search_tools.name_search(cards, search_item)
         card_results = []
         for result in result_data:
@@ -221,6 +254,11 @@ class TabFrame(ttk.Notebook):
 
     def filter_ckbox_callback(self):
         pass
+
+    def select_setname(self, *args):
+        self.filterTerms['set_name'] = self.searchSetName.get()
+        #logstr = f'{self.filterTerms['set_name']}'
+        print(self.filterTerms['set_name'])
 
     def clear_tree(self):
         for obwidget in self.page4.winfo_children():

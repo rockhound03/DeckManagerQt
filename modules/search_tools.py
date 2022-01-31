@@ -7,6 +7,14 @@ import numpy as np
 import requests
 import json
 import re
+from config import ROOT_DIR
+import os
+
+def load_card_data():
+    with open(os.path.join(ROOT_DIR,'data','cards.json'),"r") as cards_file:
+            cards_obj = json.load(cards_file)
+    card_data = cards_obj['data']
+    return card_data
 
 def name_search(cards,search_string):
     result = []
