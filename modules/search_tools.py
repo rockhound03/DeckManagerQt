@@ -47,4 +47,11 @@ def search_ability_names(cards,search_term):
                 result.append({'name':oneCard['name'],'supertype':oneCard['supertype'],'subtypes':oneCard['subtypes'][0],'setName':oneCard['set']['name'],'ability':oneCard['abilities']['name'],'ability_text':oneCard['abilities']['text'],'ability_type':oneCard['abilities']['type']})
     return result
 
-
+def advanced_search(filterdict,search_term):
+    card_full = load_card_data()
+    if filterdict['set_name'] == 'All':
+        pass
+    else:
+        for card in card_full:
+            if filterdict['set_name'] == card['set']['name']:
+                pass

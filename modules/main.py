@@ -41,13 +41,13 @@ class TabFrame(ttk.Notebook):
 
         self.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
         #options = {'width':550,'height'}
-        self.page1 = ttk.Frame(self,width=650,height=280)
+        self.page1 = ttk.Frame(self,width=750,height=380)
         self.add(self.page1,text='Set Management')
-        self.page2 = ttk.Frame(self,width=650,height=280)
+        self.page2 = ttk.Frame(self,width=750,height=380)
         self.add(self.page2,text='Deck Management')
-        self.page3 = ttk.Frame(self,width=650,height=280)
+        self.page3 = ttk.Frame(self,width=750,height=380)
         self.add(self.page3,text='Database Search')
-        self.page4 = ttk.Frame(self,width=650,height=280)
+        self.page4 = ttk.Frame(self,width=750,height=380)
         self.add(self.page4,text='Result List')
 
         
@@ -148,7 +148,7 @@ class TabFrame(ttk.Notebook):
         self.dragon_ckbox.grid(column=9,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 
         self.legalBox = ttk.LabelFrame(self.page3,text='Search Filters: Tournament Legal')
-        self.legalBox.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
+        self.legalBox.grid(column=0,row=1,padx=5,pady=5,sticky=tk.W)
         # expanded
         self.expand_ckbox = ttk.Checkbutton(self.legalBox,
                                 text='Expanded',
@@ -178,7 +178,7 @@ class TabFrame(ttk.Notebook):
         self.standard_ckbox.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
 
         self.HPfilterbox = ttk.LabelFrame(self.page3,text='Search Filters: HP Points')
-        self.HPfilterbox.grid(column=2,row=1,columnspan=1,rowspan=1,sticky=tk.E)
+        self.HPfilterbox.grid(column=2,row=1,padx=5,pady=5,sticky=tk.E)
         self.hpradio1 = ttk.Radiobutton(self.HPfilterbox, text='Greater than', value='GT',variable=self.hpEqual)
         self.hpradio1.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         self.hpradio2 = ttk.Radiobutton(self.HPfilterbox, text='Less than', value='LT',variable=self.hpEqual)
@@ -193,10 +193,10 @@ class TabFrame(ttk.Notebook):
             *self.cardSetNames,
             command=self.select_setname
         )
-        self.setListDropdown.grid(column=1,row=1,columnspan=1,rowspan=1,sticky=tk.E)
+        self.setListDropdown.grid(column=1,row=1,padx=5,pady=5,sticky=tk.E)
 
         self.nameSearchBox = ttk.LabelFrame(self.page3,text='Search: Card Name')
-        self.nameSearchBox.grid(column=0,row=3,columnspan=1,rowspan=1,sticky=tk.W)
+        self.nameSearchBox.grid(column=0,row=3,padx=5,pady=5,sticky=tk.W)
         self.search_text = ttk.Entry(self.nameSearchBox,textvariable=self.searchVar)
         self.search_text.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W,padx=2, pady=2)
         self.name_search_btn = tk.Button(self.nameSearchBox,text='Name Search')
@@ -211,7 +211,7 @@ class TabFrame(ttk.Notebook):
         self.clear_report_btn.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
 
         self.abilitySearchBox = ttk.LabelFrame(self.page3,text='Search: Ability name')
-        self.abilitySearchBox.grid(column=0,row=4,columnspan=1,rowspan=1,sticky=tk.W)
+        self.abilitySearchBox.grid(column=0,row=4,padx=5,pady=5,sticky=tk.W)
         self.ability_search_text = ttk.Entry(self.abilitySearchBox,textvariable=self.abilityVar)
         self.ability_search_text.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
         self.ability_search_btn = tk.Button(self.abilitySearchBox,text='Ability Search')
@@ -238,9 +238,7 @@ class TabFrame(ttk.Notebook):
         print(str(self.result_tree.winfo_children()))
 
     def search_ability_name(self):
-        with open(os.path.join(ROOT_DIR,'data','cards.json'),"r") as cards_file:
-            cards_obj = json.load(cards_file)
-        cards = cards_obj['data']
+        cards = search_tools.load_card_data()
         search_item = self.ability_search_text.get()
         result_data = search_tools.search_ability_names(cards, search_item)
         card_results = []
@@ -292,7 +290,7 @@ class App(tk.Tk):
         super().__init__()
 
         self.title('Deck Manager - Gen 2')
-        self.geometry('800x450+250+40')
+        self.geometry('1000x450+250+40')
         self.resizable(True, True)
         # quit button
         self.quit_button = ttk.Button(self,text='Quit')
