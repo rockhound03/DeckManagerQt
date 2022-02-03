@@ -33,6 +33,7 @@ class TabFrame(ttk.Notebook):
         self.standardBool = tk.BooleanVar()
 
         self.hpEqual = tk.StringVar()
+        self.hpSearchVar = tk.StringVar()
         self.filterTerms = gui_init.filter_bool_init()
         self.cardSetNames = gui_init.load_set_names()
         self.searchSetName = tk.StringVar()
@@ -185,6 +186,8 @@ class TabFrame(ttk.Notebook):
         self.hpradio2.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
         self.hpradio3 = ttk.Radiobutton(self.HPfilterbox, text='Equal to', value='EQ',variable=self.hpEqual)
         self.hpradio3.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
+        self.hp_search = ttk.Entry(self.HPfilterbox,textvariable=self.hpSearchVar)
+        self.hp_search.grid(column=0,row=3,columnspan=1,rowspan=1,sticky=tk.W)
 
         self.setListDropdown = ttk.OptionMenu(
             self.page3,
@@ -193,7 +196,7 @@ class TabFrame(ttk.Notebook):
             *self.cardSetNames,
             command=self.select_setname
         )
-        self.setListDropdown.grid(column=1,row=1,padx=5,pady=5,sticky=tk.E)
+        self.setListDropdown.grid(column=1,row=1,padx=5,pady=5,sticky=tk.W)
 
         self.nameSearchBox = ttk.LabelFrame(self.page3,text='Search: Card Name')
         self.nameSearchBox.grid(column=0,row=3,padx=5,pady=5,sticky=tk.W)
@@ -284,6 +287,9 @@ class TabFrame(ttk.Notebook):
         self.treeScroll = ttk.Scrollbar(self.page4,orient='vertical',command=self.result_tree.yview)
         self.treeScroll.pack(side=RIGHT, fill=Y)
         #self.treeScroll.grid(row=0,column=1,sticky='ns')
+
+    def filter_collection(self):
+        pass
 
 class App(tk.Tk):
     def __init__(self):

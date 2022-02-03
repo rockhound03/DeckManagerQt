@@ -26,7 +26,10 @@ def filter_bool_init():
             "unlimited" : False,
             "standard" : False
             },
-        "set_name" : "All"
+        "set_name" : "All",
+        "name_search" : "empty_value",
+        "ability_search" : "empty_value",
+        "hp_search" : "empty_value"
         }
     return filters
 
