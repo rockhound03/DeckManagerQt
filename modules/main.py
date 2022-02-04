@@ -214,7 +214,7 @@ class TabFrame(ttk.Notebook):
         self.clear_report_btn.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
 
         self.abilitySearchBox = ttk.LabelFrame(self.page3,text='Search: Ability name')
-        self.abilitySearchBox.grid(column=0,row=4,padx=5,pady=5,sticky=tk.W)
+        self.abilitySearchBox.grid(column=1,row=3,padx=5,pady=5,sticky=tk.W)
         self.ability_search_text = ttk.Entry(self.abilitySearchBox,textvariable=self.abilityVar)
         self.ability_search_text.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
         self.ability_search_btn = tk.Button(self.abilitySearchBox,text='Ability Search')
@@ -222,6 +222,14 @@ class TabFrame(ttk.Notebook):
         self.ability_search_btn['fg'] = "#6DBFE8"
         self.ability_search_btn['bg'] = "black"
         self.ability_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
+
+        self.advancedSearchBox = ttk.LabelFrame(self.page3,text='Search: Advanced')
+        self.advancedSearchBox.grid(column=1,row=4,padx=5,pady=5,sticky=tk.W)
+        self.advance_search_btn = tk.Button(self.advancedSearchBox,text='Advanced Search')
+        self.advance_search_btn['command'] = self.advanced_search
+        self.advance_search_btn['fg'] = "#6DBFE8"
+        self.advance_search_btn['bg'] = "black"
+        self.advance_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
 
         self.setup_tree()
 
@@ -254,7 +262,20 @@ class TabFrame(ttk.Notebook):
         print(str(self.result_tree.winfo_children()))
 
     def filter_ckbox_callback(self):
-        pass
+        self.filterTerms['energy_filter']['fire'] = self.fireBool.get()
+        self.filterTerms['energy_filter']['dark'] = self.darkBool.get()
+        self.filterTerms['energy_filter']['fighting'] = self.fightBool.get()
+        self.filterTerms['energy_filter']['grass'] = self.grassBool.get()
+        self.filterTerms['energy_filter']['electric'] = self.electricBool.get()
+        self.filterTerms['energy_filter']['water'] = self.waterBool.get()
+        self.filterTerms['energy_filter']['psychic'] = self.psychicBool.get()
+        self.filterTerms['energy_filter']['metal'] = self.metalBool.get()
+        self.filterTerms['energy_filter']['fairy'] = self.fairyBool.get()
+        self.filterTerms['energy_filter']['dragon'] = self.dragonBool.get()
+        print(str(self.filterTerms['energy_filter']['fire']))
+        if self.filterTerms['energy_filter']['fire'] == True:
+            print("true fire")
+    
 
     def select_setname(self, *args):
         self.filterTerms['set_name'] = self.searchSetName.get()
@@ -289,6 +310,9 @@ class TabFrame(ttk.Notebook):
         #self.treeScroll.grid(row=0,column=1,sticky='ns')
 
     def filter_collection(self):
+        pass
+
+    def advanced_search(self):
         pass
 
 class App(tk.Tk):
