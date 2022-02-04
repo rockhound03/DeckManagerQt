@@ -272,6 +272,11 @@ class TabFrame(ttk.Notebook):
         self.filterTerms['energy_filter']['metal'] = self.metalBool.get()
         self.filterTerms['energy_filter']['fairy'] = self.fairyBool.get()
         self.filterTerms['energy_filter']['dragon'] = self.dragonBool.get()
+
+        self.filterTerms['set_legal']['expanded'] = self.expandBool.get()
+        self.filterTerms['set_legal']['unlimited'] = self.unlimitBool.get()
+        self.filterTerms['set_legal']['standard'] = self.standardBool.get()
+
         print(str(self.filterTerms['energy_filter']['fire']))
         if self.filterTerms['energy_filter']['fire'] == True:
             print("true fire")
