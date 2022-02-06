@@ -17,16 +17,17 @@ class TabFrame(ttk.Notebook):
     def __init__(self,container):
         super().__init__(container)
         
-        self.fireBool = tk.BooleanVar()
-        self.darkBool = tk.BooleanVar()
-        self.electricBool = tk.BooleanVar()
-        self.grassBool = tk.BooleanVar()
-        self.waterBool = tk.BooleanVar()
-        self.psychicBool = tk.BooleanVar()
-        self.fightBool = tk.BooleanVar()
-        self.metalBool = tk.BooleanVar()
-        self.fairyBool = tk.BooleanVar()
-        self.dragonBool = tk.BooleanVar()
+        self.fireStr = tk.StringVar()
+        self.darkStr = tk.StringVar()
+        self.electricStr = tk.StringVar()
+        self.grassStr = tk.StringVar()
+        self.waterStr = tk.StringVar()
+        self.psychicStr = tk.StringVar()
+        self.fightStr = tk.StringVar()
+        self.metalStr = tk.StringVar()
+        self.fairyStr = tk.StringVar()
+        self.dragonStr = tk.StringVar()
+        self.colorlessStr = tk.StringVar()
 
         self.expandBool = tk.BooleanVar()
         self.unlimitBool = tk.BooleanVar()
@@ -60,94 +61,103 @@ class TabFrame(ttk.Notebook):
         self.fire_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Fire',
                                 command=self.filter_ckbox_callback,
-                                variable=self.fireBool,
-                                onvalue=True,
-                                offvalue=False
+                                variable=self.fireStr,
+                                onvalue='Fire',
+                                offvalue='empty_energy'
                                 )
         self.fire_ckbox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 
         # dark
         self.dark_ckbox = ttk.Checkbutton(self.filterBox,
-                                text='Dark',
+                                text='Darkness',
                                 command=self.filter_ckbox_callback,
-                                variable=self.darkBool,
-                                onvalue=True,
-                                offvalue=False
+                                variable=self.darkStr,
+                                onvalue='Darkness',
+                                offvalue='empty_energy'
                                 )
         self.dark_ckbox.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # fighting
         self.fight_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Fighting',
                                 command=self.filter_ckbox_callback,
-                                variable=self.fightBool,
-                                onvalue=True,
-                                offvalue=False
+                                variable=self.fightStr,
+                                onvalue='Fighting',
+                                offvalue='empty_energy'
                                 )
         self.fight_ckbox.grid(column=2,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # grass
         self.grass_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Grass',
                                 command=self.filter_ckbox_callback,
-                                variable=self.grassBool,
-                                onvalue=True,
-                                offvalue=False
+                                variable=self.grassStr,
+                                onvalue='Grass',
+                                offvalue='empty_energy'
                                 )
         self.grass_ckbox.grid(column=3,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # electric
         self.electric_ckbox = ttk.Checkbutton(self.filterBox,
-                                text='Electric',
+                                text='Lightning',
                                 command=self.filter_ckbox_callback,
-                                variable=self.electricBool,
-                                onvalue=True,
-                                offvalue=False
+                                variable=self.electricStr,
+                                onvalue='Lightning',
+                                offvalue='empty_energy'
                                 )
         self.electric_ckbox.grid(column=4,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # water
         self.water_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Water',
                                 command=self.filter_ckbox_callback,
-                                variable=self.waterBool,
-                                onvalue=True,
-                                offvalue=False
+                                variable=self.waterStr,
+                                onvalue='Water',
+                                offvalue='empty_energy'
                                 )
         self.water_ckbox.grid(column=5,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # psychic
         self.psychic_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Psychic',
                                 command=self.filter_ckbox_callback,
-                                variable=self.psychicBool,
-                                onvalue=True,
-                                offvalue=False
+                                variable=self.psychicStr,
+                                onvalue='Psychic',
+                                offvalue='empty_energy'
                                 )
         self.psychic_ckbox.grid(column=6,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # metal
         self.metal_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Metal',
                                 command=self.filter_ckbox_callback,
-                                variable=self.metalBool,
-                                onvalue=True,
-                                offvalue=False
+                                variable=self.metalStr,
+                                onvalue='Metal',
+                                offvalue='empty_energy'
                                 )
         self.metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # fairy
         self.fairy_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Fairy',
                                 command=self.filter_ckbox_callback,
-                                variable=self.fairyBool,
-                                onvalue=True,
-                                offvalue=False
+                                variable=self.fairyStr,
+                                onvalue='Fairy',
+                                offvalue='empty_energy'
                                 )
         self.fairy_ckbox.grid(column=8,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # dragon
         self.dragon_ckbox = ttk.Checkbutton(self.filterBox,
                                 text='Dragon',
                                 command=self.filter_ckbox_callback,
-                                variable=self.dragonBool,
-                                onvalue=True,
-                                offvalue=False
+                                variable=self.dragonStr,
+                                onvalue='Dragon',
+                                offvalue='empty_energy'
                                 )
         self.dragon_ckbox.grid(column=9,row=0,columnspan=1,rowspan=1,sticky=tk.W)
-
+        # colorless
+        self.colorless_ckbox = ttk.Checkbutton(self.filterBox,
+                                text='Colorless',
+                                command=self.filter_ckbox_callback,
+                                variable=self.colorlessStr,
+                                onvalue='Colorless',
+                                offvalue='empty_energy'
+                                )
+        self.colorless_ckbox.grid(column=10,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+# legal flag filters *******************************************************************
         self.legalBox = ttk.LabelFrame(self.page3,text='Search Filters: Tournament Legal')
         self.legalBox.grid(column=0,row=1,padx=5,pady=5,sticky=tk.W)
         # expanded
@@ -177,7 +187,7 @@ class TabFrame(ttk.Notebook):
                                 offvalue=False
                                 )
         self.standard_ckbox.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
-
+# Hit point filter frame : database search
         self.HPfilterbox = ttk.LabelFrame(self.page3,text='Search Filters: HP Points')
         self.HPfilterbox.grid(column=2,row=1,padx=5,pady=5,sticky=tk.E)
         self.hpradio1 = ttk.Radiobutton(self.HPfilterbox, text='Greater than', value='GT',variable=self.hpEqual)
@@ -188,7 +198,8 @@ class TabFrame(ttk.Notebook):
         self.hpradio3.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
         self.hp_search = ttk.Entry(self.HPfilterbox,textvariable=self.hpSearchVar)
         self.hp_search.grid(column=0,row=3,columnspan=1,rowspan=1,sticky=tk.W)
-
+        self.hpEqual.set('GT')
+# Card set dropdown : database search
         self.setListDropdown = ttk.OptionMenu(
             self.page3,
             self.searchSetName,
@@ -197,7 +208,7 @@ class TabFrame(ttk.Notebook):
             command=self.select_setname
         )
         self.setListDropdown.grid(column=1,row=1,padx=5,pady=5,sticky=tk.W)
-
+# name search frame : database search
         self.nameSearchBox = ttk.LabelFrame(self.page3,text='Search: Card Name')
         self.nameSearchBox.grid(column=0,row=3,padx=5,pady=5,sticky=tk.W)
         self.search_text = ttk.Entry(self.nameSearchBox,textvariable=self.searchVar)
@@ -212,7 +223,7 @@ class TabFrame(ttk.Notebook):
         self.clear_report_btn['fg'] = "#6DBFE8"
         self.clear_report_btn['bg'] = "black"
         self.clear_report_btn.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
-
+# Abilty search : database search
         self.abilitySearchBox = ttk.LabelFrame(self.page3,text='Search: Ability name')
         self.abilitySearchBox.grid(column=1,row=3,padx=5,pady=5,sticky=tk.W)
         self.ability_search_text = ttk.Entry(self.abilitySearchBox,textvariable=self.abilityVar)
@@ -222,7 +233,7 @@ class TabFrame(ttk.Notebook):
         self.ability_search_btn['fg'] = "#6DBFE8"
         self.ability_search_btn['bg'] = "black"
         self.ability_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
-
+# Advanced search : database search
         self.advancedSearchBox = ttk.LabelFrame(self.page3,text='Search: Advanced')
         self.advancedSearchBox.grid(column=1,row=4,padx=5,pady=5,sticky=tk.W)
         self.advance_search_btn = tk.Button(self.advancedSearchBox,text='Advanced Search')
@@ -262,24 +273,36 @@ class TabFrame(ttk.Notebook):
         print(str(self.result_tree.winfo_children()))
 
     def filter_ckbox_callback(self):
-        self.filterTerms['energy_filter']['fire'] = self.fireBool.get()
-        self.filterTerms['energy_filter']['dark'] = self.darkBool.get()
-        self.filterTerms['energy_filter']['fighting'] = self.fightBool.get()
-        self.filterTerms['energy_filter']['grass'] = self.grassBool.get()
-        self.filterTerms['energy_filter']['electric'] = self.electricBool.get()
-        self.filterTerms['energy_filter']['water'] = self.waterBool.get()
-        self.filterTerms['energy_filter']['psychic'] = self.psychicBool.get()
-        self.filterTerms['energy_filter']['metal'] = self.metalBool.get()
-        self.filterTerms['energy_filter']['fairy'] = self.fairyBool.get()
-        self.filterTerms['energy_filter']['dragon'] = self.dragonBool.get()
+        self.filterTerms['energy_filter']['fire'] = self.fireStr.get()
+        self.filterTerms['energy_filter']['dark'] = self.darkStr.get()
+        self.filterTerms['energy_filter']['fighting'] = self.fightStr.get()
+        self.filterTerms['energy_filter']['grass'] = self.grassStr.get()
+        self.filterTerms['energy_filter']['electric'] = self.electricStr.get()
+        self.filterTerms['energy_filter']['water'] = self.waterStr.get()
+        self.filterTerms['energy_filter']['psychic'] = self.psychicStr.get()
+        self.filterTerms['energy_filter']['metal'] = self.metalStr.get()
+        self.filterTerms['energy_filter']['fairy'] = self.fairyStr.get()
+        self.filterTerms['energy_filter']['dragon'] = self.dragonStr.get()
+        self.filterTerms['energy_filter']['colorless'] = self.colorlessStr.get()
 
         self.filterTerms['set_legal']['expanded'] = self.expandBool.get()
         self.filterTerms['set_legal']['unlimited'] = self.unlimitBool.get()
         self.filterTerms['set_legal']['standard'] = self.standardBool.get()
+        if len(self.hpSearchVar.get()) > 0:
+            self.filterTerms['hp_search'] = self.hpSearchVar.get()
+        else:
+            self.filterTerms['hp_search'] = "empty_value"
+        
+        if len(self.abilityVar.get()) > 0:
+            self.filterTerms['ability_search'] = self.abilityVar.get()
+        else:
+            self.filterTerms['ability_search'] = "empty_value"
 
-        print(str(self.filterTerms['energy_filter']['fire']))
-        if self.filterTerms['energy_filter']['fire'] == True:
-            print("true fire")
+        if len(self.searchVar.get()) > 0:
+            self.filterTerms['name_search'] = self.searchVar.get()
+        else:
+            self.filterTerms['name_search'] = "empty_value"
+
     
 
     def select_setname(self, *args):
@@ -318,6 +341,9 @@ class TabFrame(ttk.Notebook):
         pass
 
     def advanced_search(self):
+        pass
+
+    def get_hp_to_int(self):
         pass
 
 class App(tk.Tk):

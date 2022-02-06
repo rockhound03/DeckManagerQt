@@ -10,16 +10,17 @@ from config import ROOT_DIR
 def filter_bool_init():
     filters = {
         "energy_filter":{
-            "fire" : False,
-            "dark" : False,
-            "fighting" : False,
-            "grass" : False,
-            "electric" : False,
-            "water" : False,
-            "psychic" : False,
-            "metal" : False,
-            "fairy" : False,
-            "dragon" : False
+            "fire" : "empty_value",
+            "dark" : "empty_value",
+            "fighting" : "empty_value",
+            "grass" : "empty_value",
+            "electric" : "empty_value",
+            "water" : "empty_value",
+            "psychic" : "empty_value",
+            "metal" : "empty_value",
+            "fairy" : "empty_value",
+            "dragon" : "empty_value",
+            "colorless" : "empty_value"
             },
         "set_legal":{
             "expanded" : False,
