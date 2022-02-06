@@ -35,6 +35,27 @@ def ability_advanced(filters, data_cluster):
     else:
         return data_cluster
 
+def name_advanced(filters, data_cluster):
+    name_result = []
+    if filters['name_search'] != "empty_value":
+        for oneCard in data_cluster:
+            card_ = oneCard['name'].lower().find(filters['name_search'].lower())
+            if card_ >= 0:
+                name_result.append(oneCard)
+        return name_result
+    else:
+        return data_cluster
+
+def set_filter_advanced(filters, data_cluster):
+    set_result = []
+    if filters['set_name'] != "All":
+        for oneCard in data_cluster:
+            if oneCard['set']['name'] == filters['set_name']:
+                name_result.append(oneCard)
+        return name_result
+    else:
+        return data_cluster
+
 def legal_advanced(filters, data_cluster):
     legal_result = []
     if filters['set_legal']['expanded'] or filters['set_legal']['unlimited'] or filters['set_legal']['standard']:
@@ -47,7 +68,7 @@ def legal_advanced(filters, data_cluster):
 
 
 
-def calculate_hp(comparison, data_cluster, hp_value):
+def calculate_hp_advance(comparison, data_cluster, hp_value):
     calc_result = []
     if hp_value != "empty_value":
         if comparison == 'GT':
@@ -102,17 +123,9 @@ def search_ability_names(cards,search_term):
 
 def advanced_search(filterdict,search_term):
     card_full = load_card_data()
-    pokemon_str = "Pokémon"
-    sub_result = []
-    if filterdict['set_name'] == 'All':
-        energy_data = energy_filter(filterdict, card_full)
-        if pokemon_str in energy_data['supertype']:
-            if filterdict['hp_search'] != "empty_search":
-                hp_energy = calculate_hp(filterdict[''], energy_data,int(filterdict['hp_search']))
-                
-            else:
-                pass
-    else:
-        for card in card_full:
-            if filterdict['set_name'] == card['set']['name']:
-                sub_result.append(card)
+    set_data = set_filter_advanced(filterdict, card_full)
+    energy_data = energy_filter(filterdict, set_data)
+    legal_data = legal_advanced(filterdict, energy_data)
+    #hp_data = calculate_hp_advance(filterdict)
+
+
