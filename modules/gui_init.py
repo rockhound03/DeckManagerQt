@@ -30,7 +30,8 @@ def filter_bool_init():
         "set_name" : "All",
         "name_search" : "empty_value",
         "ability_search" : "empty_value",
-        "hp_search" : "empty_value"
+        "hp_search" : "empty_value",
+        "hp_check" : "GT"
         }
     return filters
 

@@ -288,6 +288,7 @@ class TabFrame(ttk.Notebook):
         self.filterTerms['set_legal']['expanded'] = self.expandBool.get()
         self.filterTerms['set_legal']['unlimited'] = self.unlimitBool.get()
         self.filterTerms['set_legal']['standard'] = self.standardBool.get()
+        self.filterTerms['hp_check'] = self.hpEqual.get()
         if len(self.hpSearchVar.get()) > 0:
             self.filterTerms['hp_search'] = self.hpSearchVar.get()
         else:
@@ -341,7 +342,16 @@ class TabFrame(ttk.Notebook):
         pass
 
     def advanced_search(self):
-        pass
+        raw_result_data = search_tools.advanced_search(self.filterTerms)
+        card_results = []
+        for result in raw_result_data:
+            card_results.append((result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
+
+        for card_result in card_results:
+            self.result_tree.insert('', tk.END, values=card_result)
+        self.result_tree.pack()
+        print(str(self.result_tree.winfo_children()))
+
 
     def get_hp_to_int(self):
         pass

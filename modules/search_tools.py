@@ -1,6 +1,6 @@
 if __name__ == "__main__":
     pass
-
+import sys
 import math
 import numpy as np
 #import pandas as pd
@@ -18,10 +18,13 @@ def load_card_data():
 
 def energy_filter(filters, data_cluster):
     energy_result = []
-    for individual in data_cluster:
-        if filters['energy_filter']['dark'] in individual['types'] or filters['energy_filter']['fighting'] in individual['types'] or filters['energy_filter']['grass'] in individual['types'] or filters['energy_filter']['electric'] in individual['types'] or filters['energy_filter']['water'] in individual['types'] or filters['energy_filter']['psychic'] in individual['types'] or filters['energy_filter']['metal'] in individual['types'] or filters['energy_filter']['fairy'] in individual['types'] or filters['energy_filter']['dragon'] in individual['types'] or filters['energy_filter']['colorless'] in individual['types']:
-            energy_result.append(individual)
-    return energy_result
+    if filters['energy_filter']['dark'] == "Darkness" or filters['energy_filter']['fighting'] == "Fighting" or filters['energy_filter']['grass'] == "Grass" or filters['energy_filter']['electric'] == "Lightning" or filters['energy_filter']['water'] == "Water" or filters['energy_filter']['psychic'] == "Psychic" or filters['energy_filter']['metal'] == "Metal" or filters['energy_filter']['fairy'] == "Fairy" or filters['energy_filter']['dragon'] == "Dragon" or filters['energy_filter']['colorless'] == "Colorless":
+        for individual in data_cluster:
+            if filters['energy_filter']['dark'] in individual['types'] or filters['energy_filter']['fighting'] in individual['types'] or filters['energy_filter']['grass'] in individual['types'] or filters['energy_filter']['electric'] in individual['types'] or filters['energy_filter']['water'] in individual['types'] or filters['energy_filter']['psychic'] in individual['types'] or filters['energy_filter']['metal'] in individual['types'] or filters['energy_filter']['fairy'] in individual['types'] or filters['energy_filter']['dragon'] in individual['types'] or filters['energy_filter']['colorless'] in individual['types']:
+                energy_result.append(individual)
+        return energy_result
+    else:
+        return data_cluster
 
 def ability_advanced(filters, data_cluster):
     ability_result = []
@@ -121,11 +124,25 @@ def search_ability_names(cards,search_term):
                 result.append({'name':oneCard['name'],'supertype':oneCard['supertype'],'subtypes':oneCard['subtypes'][0],'setName':oneCard['set']['name'],'ability':oneCard['abilities']['name'],'ability_text':oneCard['abilities']['text'],'ability_type':oneCard['abilities']['type']})
     return result
 
-def advanced_search(filterdict,search_term):
+def result_format_basic(cards):
+    basic_result = []
+    for oneCard in cards:
+        basic_result.append({'name':oneCard['name'],'supertype':oneCard['supertype'],'subtypes':oneCard['subtypes'][0],'hp':oneCard['hp'],'setName':oneCard['set']['name'],'setSeries':oneCard['set']['series'],'setLegal':oneCard['set']['legalities'],'small_img':oneCard['images']['small']})
+    return basic_result
+
+def advanced_search(filterdict):
     card_full = load_card_data()
     set_data = set_filter_advanced(filterdict, card_full)
     energy_data = energy_filter(filterdict, set_data)
     legal_data = legal_advanced(filterdict, energy_data)
-    #hp_data = calculate_hp_advance(filterdict)
+    if filterdict['hp_search'] != "empty_value":
+        hp_data = calculate_hp_advance(filterdict['hp_check'], legal_data, int(filterdict['hp_search']))
+        search_results = result_format_basic(hp_data)
+        #return hp_data
+    else:
+        search_results = result_format_basic(legal_data)
+        #return legal_data
+        print(str(len(legal_data)))
+    return search_results
 
 
