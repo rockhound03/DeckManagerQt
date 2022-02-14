@@ -342,6 +342,7 @@ class TabFrame(ttk.Notebook):
         pass
 
     def advanced_search(self):
+        self.filter_ckbox_callback()
         raw_result_data = search_tools.advanced_search(self.filterTerms)
         card_results = []
         for result in raw_result_data:

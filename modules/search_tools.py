@@ -67,13 +67,16 @@ def legal_advanced(filters, data_cluster):
                 legal_result.append(oneCard)
         return legal_result
     else:
+        print("no legal action")
         return data_cluster
 
 
 
 def calculate_hp_advance(comparison, data_cluster, hp_value):
     calc_result = []
+    print("huh???")
     if hp_value != "empty_value":
+        print("I should calc hp!!!")
         if comparison == 'GT':
             for oneCard in data_cluster:
                 if len(oneCard['hp']) > 0:
@@ -135,14 +138,21 @@ def advanced_search(filterdict):
     set_data = set_filter_advanced(filterdict, card_full)
     energy_data = energy_filter(filterdict, set_data)
     legal_data = legal_advanced(filterdict, energy_data)
+    print("post legal status:")
+    print(filterdict['hp_check'])
+    print(filterdict['hp_search'])
+    print(str(len(legal_data)))
     if filterdict['hp_search'] != "empty_value":
         hp_data = calculate_hp_advance(filterdict['hp_check'], legal_data, int(filterdict['hp_search']))
         search_results = result_format_basic(hp_data)
+        print("Yes HP")
+        print(str(len(search_results)))
         #return hp_data
     else:
         search_results = result_format_basic(legal_data)
         #return legal_data
-        print(str(len(legal_data)))
+        print("No HP")
+        print(str(len(search_results)))
     return search_results
 
 
