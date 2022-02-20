@@ -7,10 +7,12 @@ from tkinter import ttk
 import setmanager
 import search_tools
 import gui_init
+import deck_database
 from tkinter.ttk import Label
 from config import ROOT_DIR
 from PIL import Image, ImageTk
 import urllib.request
+
 
 
 class TabFrame(ttk.Notebook):
@@ -250,7 +252,8 @@ class TabFrame(ttk.Notebook):
 
         self.setup_tree()
     def edit_set(self):
-        pass
+        deck_database.create_user_table("test")
+        deck_database.create_set_table()
 
     def create_set(self):
         pass
