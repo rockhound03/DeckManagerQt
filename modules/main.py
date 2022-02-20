@@ -52,7 +52,13 @@ class TabFrame(ttk.Notebook):
         self.page4 = ttk.Frame(self,width=750,height=380)
         self.add(self.page4,text='Result List')
 
-        
+        self.setManageBox = ttk.LabelFrame(self.page1, text='Card Set Managment')
+        self.setManageBox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.edit_set_btn = tk.Button(self.setManageBox,text='Edit Set')
+        self.edit_set_btn['command'] = self.edit_set
+        self.edit_set_btn['fg'] = "#6DBFE8"
+        self.edit_set_btn['bg'] = "black"
+        self.edit_set_btn.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 
         # Filter box setups: 
         self.filterBox = ttk.LabelFrame(self.page3,text='Search Filters: Energy Type')
@@ -243,7 +249,23 @@ class TabFrame(ttk.Notebook):
         self.advance_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
 
         self.setup_tree()
+    def edit_set(self):
+        pass
 
+    def create_set(self):
+        pass
+
+    def view_set(self):
+        pass
+
+    def edit_deck(self):
+        pass
+
+    def create_deck(self):
+        pass
+
+    def view_deck(self):
+        pass
 
     def search_name(self):
         cards = search_tools.load_card_data()

@@ -62,9 +62,20 @@ def set_filter_advanced(filters, data_cluster):
 def legal_advanced(filters, data_cluster):
     legal_result = []
     if filters['set_legal']['expanded'] or filters['set_legal']['unlimited'] or filters['set_legal']['standard']:
+        print("Searching for legal sets.")
         for oneCard in data_cluster:
-            if "expanded" in oneCard['legalities'] or "unlimited" in oneCard['legalities'] or "standard" in oneCard['legalities']:
-                legal_result.append(oneCard)
+            if filters['set_legal']['expanded']:
+                if "expanded" in oneCard['legalities']:
+                    print("found expanded.")
+                    legal_result.append(oneCard)
+            if filters['set_legal']['unlimited']:       
+                if "unlimited" in oneCard['legalities']:
+                    print("found unlimited.")
+                    legal_result.append(oneCard)
+            if filters['set_legal']['standard']:
+                if "standard" in oneCard['legalities']:
+                    print("found standard.")
+                    legal_result.append(oneCard)
         return legal_result
     else:
         print("no legal action")
