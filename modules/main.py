@@ -372,7 +372,7 @@ class TabFrame(ttk.Notebook):
         result_data = search_tools.name_search(cards, search_item)
         card_results = []
         for result in result_data:
-            card_results.append((result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
+            card_results.append((result['id'],result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
 
         for card_result in card_results:
             self.result_tree.insert('', tk.END, values=card_result)
@@ -460,7 +460,6 @@ class TabFrame(ttk.Notebook):
         self.result_tree.bind('<<TreeviewSelect>>', self.treeitem_selected)
         self.treeScroll = ttk.Scrollbar(self.page4,orient='vertical',command=self.result_tree.yview)
         self.treeScroll.pack(side=RIGHT, fill=Y)
-        #self.treeScroll.bind('<<TreeviewSelect>>', treeitem_selected)
         #self.treeScroll.grid(row=0,column=1,sticky='ns')
 
     def filter_collection(self):
@@ -486,7 +485,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.title('Deck Manager - Gen 2')
+        self.title('Deck Manager - Gen 3b')
         self.geometry('1000x450+250+40')
         self.resizable(True, True)
         # quit button
