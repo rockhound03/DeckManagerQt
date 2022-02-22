@@ -35,3 +35,51 @@ def create_set_table():
     )""")
     set_c.commit()
     set_c.close()
+
+def create_deck_table(deck_table):
+    deck_connect = connect_or_create()
+    deck_cursor = deck_connect.cursor()
+
+def create_master_list():
+    conn = connect_or_create()
+    cu = conn.cursor()
+    cu.execute("""CREATE TABLE full_card_list(
+        id text,
+        name text,
+        supertype text,
+        subtypes text,
+        level text,
+        hp real,
+        types text,
+        evolvesFrom text,
+        abilities text,
+        attacks text,
+        nationalPokedexNumbers text,
+        legalities text,
+        images text,
+        evolvesTo text,
+        resistances text,
+        rules text,
+        regulationMark text)""")
+
+    conn.commit()
+    conn.close()
+
+def add_user(first_name, last_name, user_name):
+    set_c = connect_or_create()
+    s_cursor = set_c.cursor()
+    table_name = "users"
+    user_table = user_name + "_1"
+    s_cursor.execute(f'''INSERT INTO {table_name}(
+        first_name, last_name, user_name, user_table) VALUES
+        (?,?,?,?)''',(first_name,last_name,user_name,user_table))
+    set_c.commit()
+    set_c.close()
+
+def retrieve_users():
+    conn = connect_or_create()
+    cu = conn.cursor()
+
+    cu.execute("SELECT *, oid FROM users")
+    all_users = cu.fetchall()
+    print(all_users)
