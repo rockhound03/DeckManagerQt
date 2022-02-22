@@ -18,7 +18,7 @@ def create_user_table(user):
     u_cursor.execute("""CREATE TABLE users (
         first_name text,
         last_name text,
-        user_name text,
+        user_name text UNIQUE,
         user_table text
     )""")
     user_c.commit()
@@ -65,6 +65,17 @@ def create_master_list():
     conn.commit()
     conn.close()
 
+def create_user_deck_table(user_id):
+    conn = connect_or_create()
+    cu = conn.cursor()
+    cu.execute(f'''CREATE TABLE {user_id}(
+        deck_name text UNIQUE,
+        user_id text,
+        card_quantity integer,
+        description text)''')
+    conn.commit()
+    conn.close()
+
 def add_user(first_name, last_name, user_name):
     set_c = connect_or_create()
     s_cursor = set_c.cursor()
@@ -81,5 +92,8 @@ def retrieve_users():
     cu = conn.cursor()
 
     cu.execute("SELECT *, oid FROM users")
+    username_results = []
     all_users = cu.fetchall()
-    print(all_users)
+    for user in all_users:
+        username_results.append(user[2])
+    return username_results

@@ -340,15 +340,19 @@ class TabFrame(ttk.Notebook):
 
     def add_user(self):
         deck_database.add_user(self.enterFirstName.get(),self.enterLastName.get(),self.enterUserName.get())
+        # Clear text fields once submitted.
+        self.enter_first_name.delete(0,END)
+        self.enter_last_name.delete(0,END)
+        self.enter_user_name.delete(0,END)
 
     def select_active_setname(self, *args):
         pass
 
     def edit_set(self):
         #pass
-        deck_database.create_master_list()
+        #deck_database.create_master_list()
         deck_database.create_user_table("test")
-        deck_database.create_set_table()
+        #deck_database.create_set_table()
 
     def create_set(self):
         pass

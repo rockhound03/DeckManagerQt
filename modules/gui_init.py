@@ -5,6 +5,7 @@ import sys
 import os
 import json
 import tkinter as tk
+import deck_database
 from config import ROOT_DIR
 
 def filter_bool_init():
@@ -51,8 +52,10 @@ def load_supertypes():
     return all_supertypes
 
 def load_usernames():
+    #deck_database
     default_users = ['default_user_1','default_user_2']
 
 def load_user_sets():
-    default_users = ['default_userset_1','default_userset_2']
+    default_users = deck_database.retrieve_users()
+    #default_users = ['default_userset_1','default_userset_2']
     return default_users

@@ -56,8 +56,8 @@ def set_filter_advanced(filters, data_cluster):
     if filters['set_name'] != "All":
         for oneCard in data_cluster:
             if oneCard['set']['name'] == filters['set_name']:
-                name_result.append(oneCard)
-        return name_result
+                set_result.append(oneCard)
+        return set_result
     else:
         return data_cluster
 
