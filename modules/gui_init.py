@@ -5,6 +5,7 @@ import sys
 import os
 import json
 import tkinter as tk
+import deck_database
 from config import ROOT_DIR
 
 def filter_bool_init():
@@ -31,7 +32,8 @@ def filter_bool_init():
         "name_search" : "empty_value",
         "ability_search" : "empty_value",
         "hp_search" : "empty_value",
-        "hp_check" : "GT"
+        "hp_check" : "GT",
+        "supertypes" : "All"
         }
     return filters
 
@@ -44,3 +46,16 @@ def load_set_names():
     for one_set in sets:
         set_list.append(one_set['name'])
     return set_list
+
+def load_supertypes():
+    all_supertypes = ['All','Pokémon', 'Trainer', 'Energy']
+    return all_supertypes
+
+def load_usernames():
+    #deck_database
+    default_users = ['default_user_1','default_user_2']
+
+def load_user_sets():
+    default_users = deck_database.retrieve_users()
+    #default_users = ['default_userset_1','default_userset_2']
+    return default_users

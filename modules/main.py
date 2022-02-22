@@ -7,10 +7,12 @@ from tkinter import ttk
 import setmanager
 import search_tools
 import gui_init
+import deck_database
 from tkinter.ttk import Label
 from config import ROOT_DIR
 from PIL import Image, ImageTk
 import urllib.request
+
 
 
 class TabFrame(ttk.Notebook):
@@ -37,9 +39,17 @@ class TabFrame(ttk.Notebook):
         self.hpSearchVar = tk.StringVar()
         self.filterTerms = gui_init.filter_bool_init()
         self.cardSetNames = gui_init.load_set_names()
+        self.supertypeNames = gui_init.load_supertypes()
+        self.userSetNames = gui_init.load_user_sets()
         self.searchSetName = tk.StringVar()
+        self.activeUserSetName = tk.StringVar()
+        self.searchSupertype = tk.StringVar()
         self.searchVar = tk.StringVar()
         self.abilityVar = tk.StringVar()
+
+        self.enterUserName = tk.StringVar()
+        self.enterFirstName = tk.StringVar()
+        self.enterLastName = tk.StringVar()
 
         self.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
         #options = {'width':550,'height'}
@@ -51,14 +61,81 @@ class TabFrame(ttk.Notebook):
         self.add(self.page3,text='Database Search')
         self.page4 = ttk.Frame(self,width=750,height=380)
         self.add(self.page4,text='Result List')
-
+        # Set Management
         self.setManageBox = ttk.LabelFrame(self.page1, text='Card Set Managment')
-        self.setManageBox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.setManageBox.grid(column=0,row=0,columnspan=1,rowspan=1,padx=5,pady=5,sticky=tk.W)
         self.edit_set_btn = tk.Button(self.setManageBox,text='Edit Set')
         self.edit_set_btn['command'] = self.edit_set
         self.edit_set_btn['fg'] = "#6DBFE8"
         self.edit_set_btn['bg'] = "black"
-        self.edit_set_btn.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
+        self.edit_set_btn.grid(column=1,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
+
+        self.edit_set_btn = tk.Button(self.setManageBox,text='Create Set')
+        self.edit_set_btn['command'] = self.create_set
+        self.edit_set_btn['fg'] = "#6DBFE8"
+        self.edit_set_btn['bg'] = "black"
+        self.edit_set_btn.grid(column=0,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
+
+        self.edit_set_btn = tk.Button(self.setManageBox,text='View Set')
+        self.edit_set_btn['command'] = self.view_set
+        self.edit_set_btn['fg'] = "#6DBFE8"
+        self.edit_set_btn['bg'] = "black"
+        self.edit_set_btn.grid(column=2,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
+
+        self.userSetListDropdown = ttk.OptionMenu(
+            self.setManageBox,
+            self.activeUserSetName,
+            self.userSetNames[0],
+            *self.userSetNames,
+            command=self.select_active_setname
+        )
+        self.userSetListDropdown.grid(column=1,row=1,padx=5,pady=5,sticky=tk.W)
+
+        # User Management
+        self.userInfoBox = ttk.LabelFrame(self.page1, text='User Management')
+        self.userInfoBox.grid(column=1,row=0,columnspan=1,rowspan=1,padx=5,pady=5,sticky=tk.W)
+        self.add_user_btn = tk.Button(self.userInfoBox,text='Add User')
+        self.add_user_btn['command'] = self.add_user
+        self.add_user_btn['fg'] = "#6DBFE8"
+        self.add_user_btn['bg'] = "black"
+        self.add_user_btn.grid(column=0,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
+
+        self.userFirstNameBox = ttk.LabelFrame(self.userInfoBox, text='User Enter: First Name')
+        self.userFirstNameBox.grid(column=0,row=1,columnspan=1,rowspan=1,padx=5,pady=5,sticky=tk.W)
+        self.enter_first_name = ttk.Entry(self.userFirstNameBox,textvariable=self.enterFirstName)
+        self.enter_first_name.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W,padx=2, pady=4)
+
+        self.userLastNameBox = ttk.LabelFrame(self.userInfoBox, text='User Enter: Last Name')
+        self.userLastNameBox.grid(column=1,row=1,columnspan=1,rowspan=1,padx=5,pady=5,sticky=tk.W)
+        self.enter_last_name = ttk.Entry(self.userLastNameBox,textvariable=self.enterLastName)
+        self.enter_last_name.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W,padx=2, pady=4)
+
+        self.userNameBox = ttk.LabelFrame(self.userInfoBox, text='User Enter: User Name')
+        self.userNameBox.grid(column=1,row=0,columnspan=1,rowspan=1,padx=5,pady=5,sticky=tk.W)
+        self.enter_user_name = ttk.Entry(self.userNameBox,textvariable=self.enterUserName)
+        self.enter_user_name.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W,padx=2, pady=4)
+
+        # Deck Management
+        self.deckManageBox = ttk.LabelFrame(self.page2, text='Card Deck Managment')
+        self.deckManageBox.grid(column=0,row=0,columnspan=1,rowspan=1,padx=5,pady=5,sticky=tk.W)
+        self.edit_deck_btn = tk.Button(self.deckManageBox,text='Edit Deck')
+        self.edit_deck_btn['command'] = self.edit_deck
+        self.edit_deck_btn['fg'] = "#6DBFE8"
+        self.edit_deck_btn['bg'] = "black"
+        self.edit_deck_btn.grid(column=1,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=5,sticky=tk.W)
+
+        self.create_deck_btn = tk.Button(self.deckManageBox,text='Create Deck')
+        self.create_deck_btn['command'] = self.create_deck
+        self.create_deck_btn['fg'] = "#6DBFE8"
+        self.create_deck_btn['bg'] = "black"
+        self.create_deck_btn.grid(column=0,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=5,sticky=tk.W)
+
+        self.view_deck_btn = tk.Button(self.deckManageBox,text='View Deck')
+        self.view_deck_btn['command'] = self.view_deck
+        self.view_deck_btn['fg'] = "#6DBFE8"
+        self.view_deck_btn['bg'] = "black"
+        self.view_deck_btn.grid(column=2,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=5,sticky=tk.W)
+
 
         # Filter box setups: 
         self.filterBox = ttk.LabelFrame(self.page3,text='Search Filters: Energy Type')
@@ -214,6 +291,15 @@ class TabFrame(ttk.Notebook):
             command=self.select_setname
         )
         self.setListDropdown.grid(column=1,row=1,padx=5,pady=5,sticky=tk.W)
+# Supertype dropdown -- searchSupertype -- select_supertype
+        self.setSupertypeDropdown = ttk.OptionMenu(
+            self.page3,
+            self.searchSupertype,
+            self.supertypeNames[0],
+            *self.supertypeNames,
+            command=self.select_supertype
+        )
+        self.setSupertypeDropdown.grid(column=1,row=5,padx=5,pady=5,sticky=tk.W)
 # name search frame : database search
         self.nameSearchBox = ttk.LabelFrame(self.page3,text='Search: Card Name')
         self.nameSearchBox.grid(column=0,row=3,padx=5,pady=5,sticky=tk.W)
@@ -247,16 +333,32 @@ class TabFrame(ttk.Notebook):
         self.advance_search_btn['fg'] = "#6DBFE8"
         self.advance_search_btn['bg'] = "black"
         self.advance_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
-
         self.setup_tree()
-    def edit_set(self):
+
+    def treeitem_selected(self, *args):
+        print(self.result_tree.selection())
+
+    def add_user(self):
+        deck_database.add_user(self.enterFirstName.get(),self.enterLastName.get(),self.enterUserName.get())
+        # Clear text fields once submitted.
+        self.enter_first_name.delete(0,END)
+        self.enter_last_name.delete(0,END)
+        self.enter_user_name.delete(0,END)
+
+    def select_active_setname(self, *args):
         pass
+
+    def edit_set(self):
+        #pass
+        #deck_database.create_master_list()
+        deck_database.create_user_table("test")
+        #deck_database.create_set_table()
 
     def create_set(self):
         pass
 
     def view_set(self):
-        pass
+        deck_database.retrieve_users()
 
     def edit_deck(self):
         pass
@@ -274,7 +376,7 @@ class TabFrame(ttk.Notebook):
         result_data = search_tools.name_search(cards, search_item)
         card_results = []
         for result in result_data:
-            card_results.append((result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
+            card_results.append((result['id'],result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
 
         for card_result in card_results:
             self.result_tree.insert('', tk.END, values=card_result)
@@ -287,7 +389,7 @@ class TabFrame(ttk.Notebook):
         result_data = search_tools.search_ability_names(cards, search_item)
         card_results = []
         for result in result_data:
-            card_results.append((result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
+            card_results.append((result['id'],result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
 
         for card_result in card_results:
             self.result_tree.insert('', tk.END, values=card_result)
@@ -326,7 +428,8 @@ class TabFrame(ttk.Notebook):
         else:
             self.filterTerms['name_search'] = "empty_value"
 
-    
+    def select_supertype(self, *args):
+        self.filterTerms['supertypes'] = self.searchSupertype.get()    
 
     def select_setname(self, *args):
         self.filterTerms['set_name'] = self.searchSetName.get()
@@ -340,14 +443,16 @@ class TabFrame(ttk.Notebook):
         self.setup_tree()
 
     def setup_tree(self):
-        column_names =('card_name', 'type', 'set_name','set_series','hp','set_legal')
+        column_names =('card_id','card_name', 'type', 'set_name','set_series','hp','set_legal')
         self.result_tree = ttk.Treeview(self.page4, columns=column_names, show='headings')
+        self.result_tree.heading('card_id', text='Card ID')
         self.result_tree.heading('card_name',text='Card Name')
         self.result_tree.heading('type',text='Card Type')
         self.result_tree.heading('set_name',text='Set Name')
         self.result_tree.heading('set_series',text='Set Series')
         self.result_tree.heading('hp',text='Health')
         self.result_tree.heading('set_legal',text='Deck Legal')
+        self.result_tree.column('card_id',width=100,anchor=tk.W)
         self.result_tree.column('card_name',width=100,anchor=tk.W)
         self.result_tree.column('type',width=80,anchor=tk.W)
         self.result_tree.column('set_name',width=120,anchor=tk.W)
@@ -356,6 +461,7 @@ class TabFrame(ttk.Notebook):
         self.result_tree.column('set_legal',width=170,anchor=tk.W)
         #self.result_tree.grid(row=0,column=0,sticky='ns')
         self.result_tree.pack(side=LEFT)
+        self.result_tree.bind('<<TreeviewSelect>>', self.treeitem_selected)
         self.treeScroll = ttk.Scrollbar(self.page4,orient='vertical',command=self.result_tree.yview)
         self.treeScroll.pack(side=RIGHT, fill=Y)
         #self.treeScroll.grid(row=0,column=1,sticky='ns')
@@ -368,7 +474,7 @@ class TabFrame(ttk.Notebook):
         raw_result_data = search_tools.advanced_search(self.filterTerms)
         card_results = []
         for result in raw_result_data:
-            card_results.append((result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
+            card_results.append((result['id'],result['name'],result['supertype'],result['setName'],result['setSeries'],result['hp'],result['setLegal']))
 
         for card_result in card_results:
             self.result_tree.insert('', tk.END, values=card_result)
@@ -383,7 +489,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.title('Deck Manager - Gen 2')
+        self.title('Deck Manager - Gen 3b')
         self.geometry('1000x450+250+40')
         self.resizable(True, True)
         # quit button

@@ -33,6 +33,12 @@ Installation instructions for multiple OS can be found [here](https://pillow.rea
 
 ---
 
+### Database Tools - SQLite3
+Documentation and tools can be found [here](https://sqlite.org/docs.html)
+Very useful browser tool for SQLite can be found [here](https://sqlitebrowser.org/)
+
+---
+
 ## Data Sources
 
 [Pokemon TCG API Developer Portal](https://dev.pokemontcg.io/dashboard)
