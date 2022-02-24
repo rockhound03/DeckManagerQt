@@ -97,3 +97,14 @@ def retrieve_users():
     for user in all_users:
         username_results.append(user[2])
     return username_results
+
+def query_cardname():
+    conn = connect_or_create()
+    cu = conn.cursor()
+    cu.execute(f'''SELECT abilities FROM full_card_list where name="Alakazam"''')
+    rowdata = cu.fetchall()
+    for row in rowdata:
+        row_split = str(row).split(": ")
+        for part in row_split:
+            print(part)
+    conn.close()

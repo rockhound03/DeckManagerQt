@@ -350,8 +350,9 @@ class TabFrame(ttk.Notebook):
 
     def edit_set(self):
         #pass
+        deck_database.query_cardname()
         #deck_database.create_master_list()
-        deck_database.create_user_table("test")
+        #deck_database.create_user_table("test")
         #deck_database.create_set_table()
 
     def create_set(self):
