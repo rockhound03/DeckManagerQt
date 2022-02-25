@@ -98,13 +98,33 @@ def retrieve_users():
         username_results.append(user[2])
     return username_results
 
-def query_cardname():
+def query_one_column(select_column_name, search_column, search_term):
     conn = connect_or_create()
     cu = conn.cursor()
-    cu.execute(f'''SELECT abilities FROM full_card_list where name="Alakazam"''')
+    #search_term = "Blas%"
+    # Use 'LIKE' to allow wildcard '%'.
+    # Column name is selectable in order to make query multipurpose (Still in development, parse does not yet support)
+    cu.execute(f'''SELECT {select_column_name} FROM full_card_list where {search_column} LIKE "{search_term}"''')
     rowdata = cu.fetchall()
+    result_dict = []
+    ab_description = []
+    ab_name = []
     for row in rowdata:
+        counter = 1
         row_split = str(row).split(": ")
-        for part in row_split:
-            print(part)
+        if len(row_split) > 1:
+            #print(str(len(row_split)))
+            for part in row_split:
+                if counter == 2:
+                    subrow = part.split(", ")
+                    ab_name.append(subrow[0])
+                if counter == 3:
+                    ab_description.append(part)
+                #print("line: " + str(counter) +" " + part)
+                counter += 1
+    loop = 0
+    for name in ab_name:
+        result_dict.append({'name' : name,'description' : ab_description[loop]})
+        loop += 1
     conn.close()
+    return result_dict
