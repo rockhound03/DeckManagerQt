@@ -403,12 +403,13 @@ class TabFrame(ttk.Notebook):
         print(str(self.result_tree.winfo_children()))
     
     def search_ability_name_db(self):
-        column_name = "abilities"
+        column_name = "attacks"
         search_column = "name"
         search_item = self.ability_search_text.get()
         qresult = deck_database.query_one_column(column_name, search_column, search_item)
         for r in qresult:
-            print(r['name'] +"\n" + r['description'])
+            pass
+            #print(r['name'] +"\n" + r['description'])
         #select_column_name, search_column, search_term
 
     def filter_ckbox_callback(self):

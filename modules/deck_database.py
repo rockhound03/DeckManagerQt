@@ -113,14 +113,14 @@ def query_one_column(select_column_name, search_column, search_term):
         counter = 1
         row_split = str(row).split(": ")
         if len(row_split) > 1:
-            #print(str(len(row_split)))
+            print(str(len(row_split)))
             for part in row_split:
                 if counter == 2:
                     subrow = part.split(", ")
                     ab_name.append(subrow[0])
                 if counter == 3:
                     ab_description.append(part)
-                #print("line: " + str(counter) +" " + part)
+                print("line: " + str(counter) +" " + part)
                 counter += 1
     loop = 0
     for name in ab_name:
