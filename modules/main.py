@@ -316,12 +316,12 @@ class TabFrame(ttk.Notebook):
         self.clear_report_btn['bg'] = "black"
         self.clear_report_btn.grid(column=0,row=2,columnspan=1,rowspan=1,sticky=tk.W)
 # Abilty search : database search
-        self.abilitySearchBox = ttk.LabelFrame(self.page3,text='Search: Ability name')
+        self.abilitySearchBox = ttk.LabelFrame(self.page3,text='Search: Ability name\nSupports wildcard = \'%\'')
         self.abilitySearchBox.grid(column=1,row=3,padx=5,pady=5,sticky=tk.W)
         self.ability_search_text = ttk.Entry(self.abilitySearchBox,textvariable=self.abilityVar)
         self.ability_search_text.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W,padx=5, pady=5)
         self.ability_search_btn = tk.Button(self.abilitySearchBox,text='Ability Search')
-        self.ability_search_btn['command'] = self.search_name
+        self.ability_search_btn['command'] = self.search_ability_name_db
         self.ability_search_btn['fg'] = "#6DBFE8"
         self.ability_search_btn['bg'] = "black"
         self.ability_search_btn.grid(column=0,row=1,columnspan=1,rowspan=1,sticky=tk.W)
@@ -350,8 +350,14 @@ class TabFrame(ttk.Notebook):
 
     def edit_set(self):
         #pass
+        column_name = "abilities"
+        search_column = "name"
+        search_item = self.ability_search_text.get()
+        qresult = deck_database.query_one_column(column_name,search_column,search_item)
+        for r in qresult:
+            print(r['name'] +"\n" + r['description'])
         #deck_database.create_master_list()
-        deck_database.create_user_table("test")
+        #deck_database.create_user_table("test")
         #deck_database.create_set_table()
 
     def create_set(self):
@@ -395,6 +401,15 @@ class TabFrame(ttk.Notebook):
             self.result_tree.insert('', tk.END, values=card_result)
         self.result_tree.pack()
         print(str(self.result_tree.winfo_children()))
+    
+    def search_ability_name_db(self):
+        column_name = "abilities"
+        search_column = "name"
+        search_item = self.ability_search_text.get()
+        qresult = deck_database.query_one_column(column_name, search_column, search_item)
+        for r in qresult:
+            print(r['name'] +"\n" + r['description'])
+        #select_column_name, search_column, search_term
 
     def filter_ckbox_callback(self):
         self.filterTerms['energy_filter']['fire'] = self.fireStr.get()
