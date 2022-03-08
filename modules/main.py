@@ -70,17 +70,17 @@ class TabFrame(ttk.Notebook):
         self.edit_set_btn['bg'] = "black"
         self.edit_set_btn.grid(column=1,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
 
-        self.edit_set_btn = tk.Button(self.setManageBox,text='Create Set')
-        self.edit_set_btn['command'] = self.create_set
-        self.edit_set_btn['fg'] = "#6DBFE8"
-        self.edit_set_btn['bg'] = "black"
-        self.edit_set_btn.grid(column=0,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
+        self.create_set_btn = tk.Button(self.setManageBox,text='Create Set')
+        self.create_set_btn['command'] = self.create_set
+        self.create_set_btn['fg'] = "#6DBFE8"
+        self.create_set_btn['bg'] = "black"
+        self.create_set_btn.grid(column=0,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
 
-        self.edit_set_btn = tk.Button(self.setManageBox,text='View Set')
-        self.edit_set_btn['command'] = self.view_set
-        self.edit_set_btn['fg'] = "#6DBFE8"
-        self.edit_set_btn['bg'] = "black"
-        self.edit_set_btn.grid(column=2,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
+        self.view_set_btn = tk.Button(self.setManageBox,text='View Set')
+        self.view_set_btn['command'] = self.view_set
+        self.view_set_btn['fg'] = "#6DBFE8"
+        self.view_set_btn['bg'] = "black"
+        self.view_set_btn.grid(column=2,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
 
         self.userSetListDropdown = ttk.OptionMenu(
             self.setManageBox,
