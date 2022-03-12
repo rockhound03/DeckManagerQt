@@ -181,3 +181,10 @@ def advanced_search(filterdict):
     return search_results
 
 
+def advanced_setup(filter_terms):
+    energy = filter_terms['energy_filter']
+    bin_name = []
+    for egy_type in energy:
+        bin_name.append(egy_type)
+    for name in bin_name:
+        print(energy[name])

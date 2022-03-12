@@ -361,7 +361,7 @@ class TabFrame(ttk.Notebook):
         #deck_database.create_set_table()
 
     def create_set(self):
-        pass
+        search_tools.advanced_setup(self.filterTerms)
 
     def view_set(self):
         deck_database.retrieve_users()
@@ -413,17 +413,60 @@ class TabFrame(ttk.Notebook):
         #select_column_name, search_column, search_term
 
     def filter_ckbox_callback(self):
-        self.filterTerms['energy_filter']['fire'] = self.fireStr.get()
-        self.filterTerms['energy_filter']['dark'] = self.darkStr.get()
-        self.filterTerms['energy_filter']['fighting'] = self.fightStr.get()
-        self.filterTerms['energy_filter']['grass'] = self.grassStr.get()
-        self.filterTerms['energy_filter']['electric'] = self.electricStr.get()
-        self.filterTerms['energy_filter']['water'] = self.waterStr.get()
-        self.filterTerms['energy_filter']['psychic'] = self.psychicStr.get()
-        self.filterTerms['energy_filter']['metal'] = self.metalStr.get()
-        self.filterTerms['energy_filter']['fairy'] = self.fairyStr.get()
-        self.filterTerms['energy_filter']['dragon'] = self.dragonStr.get()
-        self.filterTerms['energy_filter']['colorless'] = self.colorlessStr.get()
+        if len(self.fireStr.get()) > 0:
+            self.filterTerms['energy_filter']['fire'] = self.fireStr.get()
+        else:
+            self.filterTerms['energy_filter']['fire'] = "empty_value"
+        
+        if len(self.darkStr.get()) > 0:
+            self.filterTerms['energy_filter']['dark'] = self.darkStr.get()
+        else:
+            self.filterTerms['energy_filter']['dark'] = "empty_value"
+        
+        if len(self.fightStr.get()) > 0:
+            self.filterTerms['energy_filter']['fighting'] = self.fightStr.get()
+        else:
+            self.filterTerms['energy_filter']['fighting'] = "empty_value"
+        
+        if len(self.grassStr.get()) > 0:
+            self.filterTerms['energy_filter']['grass'] = self.grassStr.get()
+        else:
+            self.filterTerms['energy_filter']['grass'] = "empty_value"
+        
+        if len(self.electricStr.get()) > 0:
+            self.filterTerms['energy_filter']['electric'] = self.electricStr.get()
+        else:
+            self.filterTerms['energy_filter']['electric'] = "empty_value"
+        
+        if len(self.waterStr.get()) > 0:
+            self.filterTerms['energy_filter']['water'] = self.waterStr.get()
+        else:
+            self.filterTerms['energy_filter']['water'] = "empty_value"
+        
+        if len(self.psychicStr.get()) > 0:
+            self.filterTerms['energy_filter']['psychic'] = self.psychicStr.get()
+        else:
+            self.filterTerms['energy_filter']['psychic'] = "empty_value"
+        
+        if len(self.metalStr.get()) > 0:
+            self.filterTerms['energy_filter']['metal'] = self.metalStr.get()
+        else:
+            self.filterTerms['energy_filter']['metal'] = "empty_value"
+        
+        if len(self.fairyStr.get()) > 0:
+            self.filterTerms['energy_filter']['fairy'] = self.fairyStr.get()
+        else:
+            self.filterTerms['energy_filter']['fairy'] = "empty_value"
+
+        if len(self.dragonStr.get()) > 0:
+            self.filterTerms['energy_filter']['dragon'] = self.dragonStr.get()
+        else:
+            self.filterTerms['energy_filter']['dragon'] = "empty_value"
+        
+        if len(self.colorlessStr.get()) > 0:
+            self.filterTerms['energy_filter']['colorless'] = self.colorlessStr.get()
+        else:
+            self.filterTerms['energy_filter']['colorless'] = "empty_value"
 
         self.filterTerms['set_legal']['expanded'] = self.expandBool.get()
         self.filterTerms['set_legal']['unlimited'] = self.unlimitBool.get()
