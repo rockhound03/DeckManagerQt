@@ -128,3 +128,17 @@ def query_one_column(select_column_name, search_column, search_term):
         loop += 1
     conn.close()
     return result_dict
+
+def build_query_energy(energy_array):
+    arr_size = len(energy_array)
+    if arr_size == 1:
+        q_string = energy_array[0]
+    elif arr_size > 1:
+        loop = 0
+        for e in energy_array:
+            if loop == 0:
+                q_string = e
+            else:
+                q_string = q_string + " or " + e
+            loop += 1
+    return q_string

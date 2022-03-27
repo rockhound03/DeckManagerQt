@@ -69,8 +69,8 @@ class TabFrame(ttk.Notebook):
         self.edit_set_btn['fg'] = "#6DBFE8"
         self.edit_set_btn['bg'] = "black"
         self.edit_set_btn.grid(column=1,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
-
-        self.create_set_btn = tk.Button(self.setManageBox,text='Create Set')
+# Filter setup test button --------
+        self.create_set_btn = tk.Button(self.setManageBox,text='Create Set * Test')
         self.create_set_btn['command'] = self.create_set
         self.create_set_btn['fg'] = "#6DBFE8"
         self.create_set_btn['bg'] = "black"

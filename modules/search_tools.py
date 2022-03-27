@@ -183,8 +183,20 @@ def advanced_search(filterdict):
 
 def advanced_setup(filter_terms):
     energy = filter_terms['energy_filter']
+    legal = filter_terms['set_legal']
     bin_name = []
+    energy_list = []
     for egy_type in energy:
         bin_name.append(egy_type)
     for name in bin_name:
-        print(energy[name])
+        if name != "empty_value":
+            energy_list.append(energy[name])
+    for one_name in energy_list:
+        print(one_name)
+    if filter_terms['ability_search'] != "empty_value":
+        pass
+    if filter_terms['hp_search'] != "empty_value":
+        pass
+    if filter_terms['name_search'] != "empty_value":
+        pass
+    
