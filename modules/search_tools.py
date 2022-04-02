@@ -9,6 +9,7 @@ import json
 import re
 from config import ROOT_DIR
 import os
+import deck_database as dd
 
 def load_card_data():
     with open(os.path.join(ROOT_DIR,'data','all_cards.json'),"r") as cards_file:
@@ -199,4 +200,11 @@ def advanced_setup(filter_terms):
         pass
     if filter_terms['name_search'] != "empty_value":
         pass
+    equery = dd.build_query_energy(energy_list)
+    fullq = dd.query_with_builder_one('name', 'subtypes', equery)
+    print(equery)
+    print("---------")
+    for arow in fullq:
+        print(arow)
+    #print(fullq)
     

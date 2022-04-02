@@ -129,16 +129,35 @@ def query_one_column(select_column_name, search_column, search_term):
     conn.close()
     return result_dict
 
+def query_with_builder_one(select_column_name, search_column, search_term):
+    conn = connect_or_create()
+    cu = conn.cursor()
+    #search_term = "Blas%"
+    # Use 'LIKE' to allow wildcard '%'.
+    # Column name is selectable in order to make query multipurpose (Still in development, parse does not yet support)
+    cu.execute(f'''SELECT {select_column_name} FROM full_card_list where {search_term}''')
+    rowdata = cu.fetchall()
+    result_dict = []
+    conn.close()
+    for one_row in rowdata:
+        print(one_row)
+    return rowdata
+
 def build_query_energy(energy_array):
-    arr_size = len(energy_array)
+    just_selected = []
+    target_column = "types"
+    for e in energy_array:
+        if e != "empty_value":
+            just_selected.append(e)
+    arr_size = len(just_selected)
     if arr_size == 1:
-        q_string = energy_array[0]
+        q_string = target_column + "LIKE \'" + just_selected[0] + "\'"
     elif arr_size > 1:
         loop = 0
-        for e in energy_array:
+        for j in just_selected:
             if loop == 0:
-                q_string = e
+                q_string = target_column + "LIKE \'" + j + "\'"
             else:
-                q_string = q_string + " or " + e
+                q_string = q_string + " OR " + target_column + "LIKE \'"+ j + "\'"
             loop += 1
     return q_string
