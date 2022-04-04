@@ -69,18 +69,18 @@ class TabFrame(ttk.Notebook):
         self.edit_set_btn['fg'] = "#6DBFE8"
         self.edit_set_btn['bg'] = "black"
         self.edit_set_btn.grid(column=1,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
+# Filter setup test button --------
+        self.create_set_btn = tk.Button(self.setManageBox,text='Create Set * Test')
+        self.create_set_btn['command'] = self.create_set
+        self.create_set_btn['fg'] = "#6DBFE8"
+        self.create_set_btn['bg'] = "black"
+        self.create_set_btn.grid(column=0,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
 
-        self.edit_set_btn = tk.Button(self.setManageBox,text='Create Set')
-        self.edit_set_btn['command'] = self.create_set
-        self.edit_set_btn['fg'] = "#6DBFE8"
-        self.edit_set_btn['bg'] = "black"
-        self.edit_set_btn.grid(column=0,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
-
-        self.edit_set_btn = tk.Button(self.setManageBox,text='View Set')
-        self.edit_set_btn['command'] = self.view_set
-        self.edit_set_btn['fg'] = "#6DBFE8"
-        self.edit_set_btn['bg'] = "black"
-        self.edit_set_btn.grid(column=2,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
+        self.view_set_btn = tk.Button(self.setManageBox,text='View Set')
+        self.view_set_btn['command'] = self.view_set
+        self.view_set_btn['fg'] = "#6DBFE8"
+        self.view_set_btn['bg'] = "black"
+        self.view_set_btn.grid(column=2,row=0,columnspan=1,rowspan=1,padx=5,pady=5,ipadx=9,sticky=tk.W)
 
         self.userSetListDropdown = ttk.OptionMenu(
             self.setManageBox,
@@ -146,7 +146,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.fireStr,
                                 onvalue='Fire',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.fire_ckbox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 
@@ -156,7 +156,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.darkStr,
                                 onvalue='Darkness',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.dark_ckbox.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # fighting
@@ -165,7 +165,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.fightStr,
                                 onvalue='Fighting',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.fight_ckbox.grid(column=2,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # grass
@@ -174,7 +174,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.grassStr,
                                 onvalue='Grass',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.grass_ckbox.grid(column=3,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # electric
@@ -183,7 +183,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.electricStr,
                                 onvalue='Lightning',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.electric_ckbox.grid(column=4,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # water
@@ -192,7 +192,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.waterStr,
                                 onvalue='Water',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.water_ckbox.grid(column=5,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # psychic
@@ -201,7 +201,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.psychicStr,
                                 onvalue='Psychic',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.psychic_ckbox.grid(column=6,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # metal
@@ -210,7 +210,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.metalStr,
                                 onvalue='Metal',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # fairy
@@ -219,7 +219,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.fairyStr,
                                 onvalue='Fairy',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.fairy_ckbox.grid(column=8,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # dragon
@@ -228,7 +228,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.dragonStr,
                                 onvalue='Dragon',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.dragon_ckbox.grid(column=9,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # colorless
@@ -237,7 +237,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.colorlessStr,
                                 onvalue='Colorless',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.colorless_ckbox.grid(column=10,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 # legal flag filters *******************************************************************
@@ -361,7 +361,7 @@ class TabFrame(ttk.Notebook):
         #deck_database.create_set_table()
 
     def create_set(self):
-        pass
+        search_tools.advanced_setup(self.filterTerms)
 
     def view_set(self):
         deck_database.retrieve_users()
@@ -403,26 +403,70 @@ class TabFrame(ttk.Notebook):
         print(str(self.result_tree.winfo_children()))
     
     def search_ability_name_db(self):
-        column_name = "abilities"
+        column_name = "attacks"
         search_column = "name"
         search_item = self.ability_search_text.get()
         qresult = deck_database.query_one_column(column_name, search_column, search_item)
         for r in qresult:
-            print(r['name'] +"\n" + r['description'])
+            pass
+            #print(r['name'] +"\n" + r['description'])
         #select_column_name, search_column, search_term
 
     def filter_ckbox_callback(self):
-        self.filterTerms['energy_filter']['fire'] = self.fireStr.get()
-        self.filterTerms['energy_filter']['dark'] = self.darkStr.get()
-        self.filterTerms['energy_filter']['fighting'] = self.fightStr.get()
-        self.filterTerms['energy_filter']['grass'] = self.grassStr.get()
-        self.filterTerms['energy_filter']['electric'] = self.electricStr.get()
-        self.filterTerms['energy_filter']['water'] = self.waterStr.get()
-        self.filterTerms['energy_filter']['psychic'] = self.psychicStr.get()
-        self.filterTerms['energy_filter']['metal'] = self.metalStr.get()
-        self.filterTerms['energy_filter']['fairy'] = self.fairyStr.get()
-        self.filterTerms['energy_filter']['dragon'] = self.dragonStr.get()
-        self.filterTerms['energy_filter']['colorless'] = self.colorlessStr.get()
+        if len(self.fireStr.get()) > 0:
+            self.filterTerms['energy_filter']['fire'] = self.fireStr.get()
+        else:
+            self.filterTerms['energy_filter']['fire'] = "empty_value"
+        
+        if len(self.darkStr.get()) > 0:
+            self.filterTerms['energy_filter']['dark'] = self.darkStr.get()
+        else:
+            self.filterTerms['energy_filter']['dark'] = "empty_value"
+        
+        if len(self.fightStr.get()) > 0:
+            self.filterTerms['energy_filter']['fighting'] = self.fightStr.get()
+        else:
+            self.filterTerms['energy_filter']['fighting'] = "empty_value"
+        
+        if len(self.grassStr.get()) > 0:
+            self.filterTerms['energy_filter']['grass'] = self.grassStr.get()
+        else:
+            self.filterTerms['energy_filter']['grass'] = "empty_value"
+        
+        if len(self.electricStr.get()) > 0:
+            self.filterTerms['energy_filter']['electric'] = self.electricStr.get()
+        else:
+            self.filterTerms['energy_filter']['electric'] = "empty_value"
+        
+        if len(self.waterStr.get()) > 0:
+            self.filterTerms['energy_filter']['water'] = self.waterStr.get()
+        else:
+            self.filterTerms['energy_filter']['water'] = "empty_value"
+        
+        if len(self.psychicStr.get()) > 0:
+            self.filterTerms['energy_filter']['psychic'] = self.psychicStr.get()
+        else:
+            self.filterTerms['energy_filter']['psychic'] = "empty_value"
+        
+        if len(self.metalStr.get()) > 0:
+            self.filterTerms['energy_filter']['metal'] = self.metalStr.get()
+        else:
+            self.filterTerms['energy_filter']['metal'] = "empty_value"
+        
+        if len(self.fairyStr.get()) > 0:
+            self.filterTerms['energy_filter']['fairy'] = self.fairyStr.get()
+        else:
+            self.filterTerms['energy_filter']['fairy'] = "empty_value"
+
+        if len(self.dragonStr.get()) > 0:
+            self.filterTerms['energy_filter']['dragon'] = self.dragonStr.get()
+        else:
+            self.filterTerms['energy_filter']['dragon'] = "empty_value"
+        
+        if len(self.colorlessStr.get()) > 0:
+            self.filterTerms['energy_filter']['colorless'] = self.colorlessStr.get()
+        else:
+            self.filterTerms['energy_filter']['colorless'] = "empty_value"
 
         self.filterTerms['set_legal']['expanded'] = self.expandBool.get()
         self.filterTerms['set_legal']['unlimited'] = self.unlimitBool.get()

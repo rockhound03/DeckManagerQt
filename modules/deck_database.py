@@ -97,6 +97,7 @@ def retrieve_users():
     for user in all_users:
         username_results.append(user[2])
     return username_results
+    conn.close()
 
 def query_one_column(select_column_name, search_column, search_term):
     conn = connect_or_create()
@@ -113,14 +114,14 @@ def query_one_column(select_column_name, search_column, search_term):
         counter = 1
         row_split = str(row).split(": ")
         if len(row_split) > 1:
-            #print(str(len(row_split)))
+            print(str(len(row_split)))
             for part in row_split:
                 if counter == 2:
                     subrow = part.split(", ")
                     ab_name.append(subrow[0])
                 if counter == 3:
                     ab_description.append(part)
-                #print("line: " + str(counter) +" " + part)
+                print("line: " + str(counter) +" " + part)
                 counter += 1
     loop = 0
     for name in ab_name:
@@ -128,3 +129,50 @@ def query_one_column(select_column_name, search_column, search_term):
         loop += 1
     conn.close()
     return result_dict
+
+def query_with_builder_one(select_column_name, search_column, search_term):
+    conn = connect_or_create()
+    cu = conn.cursor()
+    #search_term = "Blas%"
+    # Use 'LIKE' to allow wildcard '%'.
+    # Column name is selectable in order to make query multipurpose (Still in development, parse does not yet support)
+    cu.execute(f'''SELECT {select_column_name} FROM full_card_list where {search_term}''')
+    rowdata = cu.fetchall()
+    result_dict = []
+    conn.close()
+    for one_row in rowdata:
+        print(one_row)
+    return rowdata
+
+def build_query_energy(energy_array):
+    just_selected = []
+    target_column = "types"
+    for e in energy_array:
+        if e != "empty_value":
+            just_selected.append(e)
+    arr_size = len(just_selected)
+    if arr_size == 1:
+        q_string = target_column + " LIKE " + "\'[%" + just_selected[0] + "%]\'"
+    elif arr_size > 1:
+        loop = 0
+        for j in just_selected:
+            if loop == 0:
+                q_string = target_column + " LIKE " + "\'[%" + j + "%]\'"
+            else:
+                q_string = q_string + " OR " + target_column + " LIKE "+ "\'[%" + j + "%]\'"
+            loop += 1
+    return q_string
+
+def query_test():
+    conn = connect_or_create()
+    cu = conn.cursor()
+    #search_term = "Blas%"
+    # Use 'LIKE' to allow wildcard '%'.
+    # Column name is selectable in order to make query multipurpose (Still in development, parse does not yet support)
+    cu.execute('''SELECT id FROM full_card_list where types LIKE \'[%Water%]\' OR types LIKE \'[%Psychic%]\'''')
+    rowdata = cu.fetchall()
+    result_dict = []
+    conn.close()
+    for one_row in rowdata:
+        print(one_row)
+    return rowdata
