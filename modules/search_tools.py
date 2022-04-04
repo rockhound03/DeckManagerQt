@@ -201,10 +201,10 @@ def advanced_setup(filter_terms):
     if filter_terms['name_search'] != "empty_value":
         pass
     equery = dd.build_query_energy(energy_list)
-    fullq = dd.query_with_builder_one('name', 'subtypes', equery)
+    fullq = dd.query_with_builder_one("id", "types", equery)
     print(equery)
     print("---------")
-    for arow in fullq:
-        print(arow)
+    #for arow in fullq:
+        #print(arow)
     #print(fullq)
     

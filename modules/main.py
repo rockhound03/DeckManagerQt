@@ -146,7 +146,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.fireStr,
                                 onvalue='Fire',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.fire_ckbox.grid(column=0,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 
@@ -156,7 +156,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.darkStr,
                                 onvalue='Darkness',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.dark_ckbox.grid(column=1,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # fighting
@@ -165,7 +165,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.fightStr,
                                 onvalue='Fighting',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.fight_ckbox.grid(column=2,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # grass
@@ -174,7 +174,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.grassStr,
                                 onvalue='Grass',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.grass_ckbox.grid(column=3,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # electric
@@ -183,7 +183,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.electricStr,
                                 onvalue='Lightning',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.electric_ckbox.grid(column=4,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # water
@@ -192,7 +192,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.waterStr,
                                 onvalue='Water',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.water_ckbox.grid(column=5,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # psychic
@@ -201,7 +201,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.psychicStr,
                                 onvalue='Psychic',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.psychic_ckbox.grid(column=6,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # metal
@@ -210,7 +210,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.metalStr,
                                 onvalue='Metal',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.metal_ckbox.grid(column=7,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # fairy
@@ -219,7 +219,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.fairyStr,
                                 onvalue='Fairy',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.fairy_ckbox.grid(column=8,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # dragon
@@ -228,7 +228,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.dragonStr,
                                 onvalue='Dragon',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.dragon_ckbox.grid(column=9,row=0,columnspan=1,rowspan=1,sticky=tk.W)
         # colorless
@@ -237,7 +237,7 @@ class TabFrame(ttk.Notebook):
                                 command=self.filter_ckbox_callback,
                                 variable=self.colorlessStr,
                                 onvalue='Colorless',
-                                offvalue='empty_energy'
+                                offvalue='empty_value'
                                 )
         self.colorless_ckbox.grid(column=10,row=0,columnspan=1,rowspan=1,sticky=tk.W)
 # legal flag filters *******************************************************************
