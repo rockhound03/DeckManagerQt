@@ -59,3 +59,7 @@ def load_user_sets():
     default_users = deck_database.retrieve_users()
     #default_users = ['default_userset_1','default_userset_2']
     return default_users
+
+def load_user_tables():
+    user_set_table_list = deck_database.retrieve_user_tables("blank")
+    return user_set_table_list

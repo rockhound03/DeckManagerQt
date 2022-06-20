@@ -76,6 +76,19 @@ def create_user_deck_table(user_id):
     conn.commit()
     conn.close()
 
+def create_user_set_table(user_set):
+    conn = connect_or_create()
+    cu = conn.cursor()
+    cu.execute(f'''CREATE TABLE {user_set}(
+        deck_name text UNIQUE,
+        card_name text,
+        card_id text,
+        set_name text,
+        card_quantity integer,
+        description text)''')
+    conn.commit()
+    conn.close()
+
 def add_user(first_name, last_name, user_name):
     set_c = connect_or_create()
     s_cursor = set_c.cursor()
@@ -97,6 +110,18 @@ def retrieve_users():
     for user in all_users:
         username_results.append(user[2])
     return username_results
+    conn.close()
+
+def retrieve_user_tables(user_name):
+    conn = connect_or_create()
+    cu = conn.cursor()
+    cu.execute("SELECT *, oid from users")
+    usertable_results = []
+    all_tables = cu.fetchall()
+    for table in all_tables:
+        usertable_results.append(table[3])
+        print(table[3])
+    return usertable_results
     conn.close()
 
 def query_one_column(select_column_name, search_column, search_term):

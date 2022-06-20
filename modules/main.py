@@ -41,6 +41,7 @@ class TabFrame(ttk.Notebook):
         self.cardSetNames = gui_init.load_set_names()
         self.supertypeNames = gui_init.load_supertypes()
         self.userSetNames = gui_init.load_user_sets()
+        self.userSetTables = gui_init.load_user_tables()
         self.searchSetName = tk.StringVar()
         self.activeUserSetName = tk.StringVar()
         self.searchSupertype = tk.StringVar()
@@ -50,6 +51,8 @@ class TabFrame(ttk.Notebook):
         self.enterUserName = tk.StringVar()
         self.enterFirstName = tk.StringVar()
         self.enterLastName = tk.StringVar()
+
+        #self.activeUserSetTable 
 
         self.grid(column=0,row=1,columnspan=2,rowspan=2,sticky=tk.SW)
         #options = {'width':550,'height'}
@@ -362,6 +365,11 @@ class TabFrame(ttk.Notebook):
 
     def create_set(self):
         search_tools.advanced_setup(self.filterTerms)
+    
+    def create_new_collection(self):
+        pass
+        #new_user_set_name = "test"
+        #deck_database.create_user_set_table(new_user_set_name)
 
     def view_set(self):
         deck_database.retrieve_users()
